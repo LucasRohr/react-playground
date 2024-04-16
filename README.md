@@ -6,17 +6,17 @@ Project initial roadmap:
   - [ ] Vite
   - [ ] ES-Lint
   - [ ] Prettier
-- Routes
-  - [ ] React Router
+- Structure and routes
+  - [ ] Next
 - UI and style
   - [ ] Styled components
   - [ ] Tailwind CSS
   - [ ] Chakra UI
-- Data fetch
+- Data fetch and state management
   - [ ] TanStack Query (FKA React Query)
-- Forms
+- Forms and validation
   - [ ] React Hook Form
-  - [ ] Zodd
+  - [ ] Zod
 - Extras
   - [ ] React DnD (drag and drop)
   - [ ] React Spring (animations)
