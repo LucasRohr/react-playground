@@ -26,7 +26,7 @@ Project initial roadmap:
 
 ---
 
-** :question: My Trivia project:**
+**:question: My Trivia project:**
 
 **Context:** application to answer and create trivia questions in a gamified way<br>
 **Used API:** https://opentdb.com/api_config.php<br>
