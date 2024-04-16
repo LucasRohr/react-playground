@@ -1,6 +1,6 @@
 # ⚛️ react-playground
 A project to study and play with React JS libraries and frameworks for professional growth and knowledge.<br>
-Project roadmap:
+Project initial roadmap:
 
 - Config
   - [ ] Vite
