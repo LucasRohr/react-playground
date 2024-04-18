@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { APP_COLORS } from '../../constants'
+import { APP_COLORS } from '@constants'
 
 const StyledRouter = styled.section`
     height: 100vh;
