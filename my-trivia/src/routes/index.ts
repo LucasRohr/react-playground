@@ -1,1 +1,1 @@
-export { RootRouter } from './root-router/root-router-component'
+export { router } from './router/router'

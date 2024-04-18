@@ -8,9 +8,9 @@ const StyledButton = styled.button<{ isPrimary: boolean }>`
     align-items: center;
     font-size: 24px;
     font-weight: 600;
-    color: ${(props) => (props.isPrimary ? APP_COLORS.LIGHT_BLACK : APP_COLORS.WHITE)};
+    color: ${(props) => (props.isPrimary ? APP_COLORS.WHITE : APP_COLORS.LIGHT_BLACK)};
     background-color: ${(props) =>
-        props.isPrimary ? APP_COLORS.LIGHT_PRIMARY : APP_COLORS.DARK_PRIMARY};
+        props.isPrimary ? APP_COLORS.DARK_PRIMARY : APP_COLORS.LIGHT_PRIMARY};
     padding: 0.6em 1.5em 0.5em 1.5em;
     border-radius: 4px;
     border: none;
