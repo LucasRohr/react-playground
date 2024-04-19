@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { APP_COLORS } from '@constants'
 import { ComponentStyles } from '@components'
 
 const StyledRouter = styled.div`
@@ -9,7 +8,7 @@ const StyledRouter = styled.div`
     flex-direction: row;
     align-items: start;
     justify-content: start;
-    background-color: ${APP_COLORS.DARK_BLACK};
+    background-color: ${(props) => props.theme.DARK_BLACK};
 `
 
 const MenuSection = styled.section`
@@ -20,27 +19,27 @@ const MenuSection = styled.section`
     align-items: start;
     justify-content: start;
     padding: 2em 2.5em 0em 2.5em;
-    background-color: ${APP_COLORS.LIGHT_BLACK};
+    background-color: ${(props) => props.theme.LIGHT_BLACK};
 `
 
 const Title = styled.h1`
     font-size: 32px;
     font-weight: bold;
-    color: ${APP_COLORS.LIGHT_PRIMARY};
+    color: ${(props) => props.theme.LIGHT_PRIMARY};
     margin-bottom: 1em;
 `
 
 const ScorePrefixText = styled.span`
     font-size: 26px;
     font-weight: bold;
-    color: ${APP_COLORS.LIGHT_PRIMARY};
+    color: ${(props) => props.theme.LIGHT_PRIMARY};
     margin-bottom: 2em;
 `
 
 const ScoreText = styled.span`
     font-size: 26px;
     font-weight: bold;
-    color: ${APP_COLORS.WHITE};
+    color: ${(props) => props.theme.WHITE};
     margin-bottom: 2em;
 `
 

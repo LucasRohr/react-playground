@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { APP_COLORS } from '@constants'
 
 const StyledError = styled.section`
     width: fit-content;
@@ -13,20 +12,20 @@ const StyledError = styled.section`
 const Title = styled.h1`
     font-size: 32px;
     font-weight: bold;
-    color: ${APP_COLORS.ERROR};
+    color: ${(props) => props.theme.ERROR};
 `
 
 const Subtitle = styled.p`
     font-size: 24px;
     font-weight: 500;
-    color: ${APP_COLORS.WHITE};
+    color: ${(props) => props.theme.WHITE};
     margin-bottom: 1em;
 `
 
 const ErrorMessage = styled.p`
     font-size: 24px;
     font-weight: 600;
-    color: ${APP_COLORS.ERROR};
+    color: ${(props) => props.theme.ERROR};
     margin-bottom: 3em;
 `
 
