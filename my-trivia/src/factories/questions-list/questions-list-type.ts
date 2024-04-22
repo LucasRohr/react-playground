@@ -1,4 +1,4 @@
-import { QuestionInterface } from '../question/question-type'
+import type { QuestionInterface } from '../question/question-type'
 
 export interface QuestionsListInterface {
     questions: QuestionInterface[]

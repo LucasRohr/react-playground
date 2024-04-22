@@ -1,5 +1,10 @@
 import axios from 'axios'
-import type { BaseRequestInterface, DataRequestInterface } from './request-service-types'
+import type {
+    GetRequestInterface,
+    DeleteRequestInterface,
+    PostRequestInterface,
+    PutRequestInterface,
+} from './request-service-types'
 
 const BASE_URL = 'https://opentdb.com/api.php?'
 
@@ -10,25 +15,25 @@ export class RequestService {
         this.path = `${BASE_URL}${url}`
     }
 
-    async get<ParamsType>({ params }: BaseRequestInterface<ParamsType>) {
+    async get<ParamsType>({ params }: GetRequestInterface<ParamsType>) {
         return await axios.get(this.path, {
             params,
         })
     }
 
-    async post<ParamsType>({ data, params }: DataRequestInterface<ParamsType>) {
+    async post<ParamsType>({ data, params }: PostRequestInterface<ParamsType>) {
         return await axios.post(this.path, data, {
             params,
         })
     }
 
-    async put<ParamsType>({ data, params }: DataRequestInterface<ParamsType>) {
+    async put<ParamsType>({ data, params }: PutRequestInterface<ParamsType>) {
         return await axios.put(this.path, data, {
             params,
         })
     }
 
-    async del<ParamsType>({ params }: BaseRequestInterface<ParamsType>) {
+    async del<ParamsType>({ params }: DeleteRequestInterface<ParamsType>) {
         return await axios.delete(this.path, {
             params,
         })

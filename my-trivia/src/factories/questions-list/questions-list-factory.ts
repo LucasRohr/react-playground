@@ -9,9 +9,9 @@ export function questionsListFactory(object: any): QuestionsListInterface | null
 
     const { results } = object
 
-    const parsedQuestions = results ?? []
+    const responseQuestions = results ?? []
 
     return {
-        questions: parsedQuestions.map(questionFactory),
+        questions: responseQuestions.map(questionFactory),
     }
 }

@@ -1,4 +1,4 @@
-import { questionsListFactory } from 'src/factories'
+import { questionsListFactory } from '@factories'
 import { RequestService } from '../request/request-service'
 import { GetQuestionsParamsInterface } from './questions-service-types'
 

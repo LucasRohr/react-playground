@@ -33,7 +33,7 @@ export function RootRouter() {
             }
 
             return (
-                <RouterButton isPrimary={isSelectedPage} onClick={onClickButton}>
+                <RouterButton $isPrimary={isSelectedPage} onClick={onClickButton}>
                     {pageData.LABEL}
                 </RouterButton>
             )

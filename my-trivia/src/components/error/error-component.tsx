@@ -21,7 +21,7 @@ export function ErrorComponent() {
             <Title>{ERROR_COMPONENT_STRINGS.TITLE}</Title>
             <Subtitle>{ERROR_COMPONENT_STRINGS.SUBTITLE}</Subtitle>
             <ErrorMessage>{errorMessage}</ErrorMessage>
-            <Button isPrimary onClick={() => navigate('/')}>
+            <Button $isPrimary onClick={() => navigate('/')}>
                 {ERROR_COMPONENT_STRINGS.BACK_BUTTON_LABEL}
             </Button>
         </StyledError>

@@ -1,12 +1,19 @@
-interface BaseRequestInterface<ParamsType> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface GetRequestInterface<ParamsType> {
     params: ParamsType
 }
 
-interface DataRequestInterface<ParamsType> {
+interface DeleteRequestInterface<ParamsType> extends GetRequestInterface<ParamsType> {}
+
+interface PostRequestInterface<ParamsType> {
     data: object
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: ParamsType
 }
 
-export type { BaseRequestInterface, DataRequestInterface }
+interface PutRequestInterface<ParamsType> extends PostRequestInterface<ParamsType> {}
+
+export type {
+    GetRequestInterface,
+    DeleteRequestInterface,
+    PostRequestInterface,
+    PutRequestInterface,
+}

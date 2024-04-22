@@ -10,12 +10,15 @@ export function questionFactory(object: any): QuestionInterface | null {
     const { type, difficulty, category, question, correct_answer, incorrect_answers } = object
 
     const questionType = type ?? ''
-    const parsedType = QUESTIONS_FILTERS.TYPE[questionType as keyof typeof QUESTIONS_FILTERS.TYPE]
+    const upperQuestionType = questionType.toUpperCase()
+    const parsedType =
+        QUESTIONS_FILTERS.TYPE[upperQuestionType as keyof typeof QUESTIONS_FILTERS.TYPE]
 
     const questionDifficulty = difficulty ?? ''
+    const upperQuestionDifficulty = questionDifficulty.toUpperCase()
     const parsedDifficulty =
         QUESTIONS_FILTERS.DIFFICULTY[
-            questionDifficulty as keyof typeof QUESTIONS_FILTERS.DIFFICULTY
+            upperQuestionDifficulty as keyof typeof QUESTIONS_FILTERS.DIFFICULTY
         ]
 
     const parsedScore = SCORES[parsedDifficulty as keyof typeof SCORES]
