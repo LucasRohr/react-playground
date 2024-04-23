@@ -3,12 +3,14 @@ import { ComponentStyles } from '@components'
 
 const StyledRouter = styled.div`
     height: 100vh;
+    max-height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: row;
     align-items: start;
     justify-content: start;
     background-color: ${(props) => props.theme.DARK_BLACK};
+    overflow: hidden;
 `
 
 const MenuSection = styled.section`

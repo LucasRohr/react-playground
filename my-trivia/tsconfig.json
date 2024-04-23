@@ -39,6 +39,8 @@
       "@services/*": ["src/services/*"],
       "@factories": ["src/factories"],
       "@factories/*": ["src/factories/*"],
+      "@utils": ["src/utils"],
+      "@utils/*": ["src/utils/*"],
     }
   },
   "include": ["src"],
