@@ -16,7 +16,7 @@ Project initial roadmap:
   - [ ] Chakra UI
 - Data fetch and state management
   - [ ] TanStack Query (FKA React Query)
-  - [ ] Redux Toolkit
+  - [ ] Jotai
 - Forms and validation
   - [ ] React Hook Form
   - [ ] Zod
@@ -39,6 +39,7 @@ Project initial roadmap:
 - React Router
 - Styled components
 - TanStack Query (FKA React Query)
+- Jotai
 - React Hook Form
 - Zod
 - React Spring

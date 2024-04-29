@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useAtomValue } from 'jotai'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import { PAGES } from '@constants'
+import { scoreAtom } from '@store'
 
 import { ROOT_ROUTER_STRINGS } from './root-router-strings'
 import {
@@ -15,6 +17,8 @@ import {
 
 export function RootRouter() {
     const [selectedPage, setSelectedPage] = useState(PAGES.HOME.KEY)
+
+    const score = useAtomValue(scoreAtom)
 
     const navigate = useNavigate()
 
@@ -47,7 +51,7 @@ export function RootRouter() {
                 <Title>{ROOT_ROUTER_STRINGS.APP_NAME}</Title>
                 <ScorePrefixText>
                     {ROOT_ROUTER_STRINGS.SCORE_LABEL}
-                    <ScoreText>0</ScoreText>
+                    <ScoreText>{score}</ScoreText>
                 </ScorePrefixText>
                 {renderButton(PAGES.HOME.KEY)}
                 {renderButton(PAGES.QUESTIONS.KEY)}

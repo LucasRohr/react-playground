@@ -41,6 +41,8 @@
       "@factories/*": ["src/factories/*"],
       "@utils": ["src/utils"],
       "@utils/*": ["src/utils/*"],
+      "@store": ["src/store"],
+      "@store/*": ["src/store/*"],
     }
   },
   "include": ["src"],

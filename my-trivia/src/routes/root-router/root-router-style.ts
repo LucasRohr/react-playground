@@ -16,6 +16,8 @@ const StyledRouter = styled.div`
 const MenuSection = styled.section`
     height: 100vh;
     width: 15%;
+    min-width: 15%;
+    max-width: 15%;
     display: flex;
     flex-direction: column;
     align-items: start;

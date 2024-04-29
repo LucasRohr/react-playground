@@ -1,3 +1,4 @@
+import { Provider as StoreProvider } from 'jotai'
 import { ThemeProvider } from 'styled-components'
 import { RouterProvider } from 'react-router-dom'
 import { createTheme, THEME_ID } from '@mui/material'
@@ -6,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { router } from '@routes'
 import { APP_COLORS } from '@constants'
+import { store } from '@store'
 
 const queryClient = new QueryClient()
 
@@ -26,12 +28,14 @@ const materialTheme = createTheme({
 
 export function App() {
     return (
-        <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={APP_COLORS}>
-                <MaterialThemeProvider theme={{ [THEME_ID]: materialTheme }}>
-                    <RouterProvider router={router} />
-                </MaterialThemeProvider>
-            </ThemeProvider>
-        </QueryClientProvider>
+        <StoreProvider store={store}>
+            <QueryClientProvider client={queryClient}>
+                <ThemeProvider theme={APP_COLORS}>
+                    <MaterialThemeProvider theme={{ [THEME_ID]: materialTheme }}>
+                        <RouterProvider router={router} />
+                    </MaterialThemeProvider>
+                </ThemeProvider>
+            </QueryClientProvider>
+        </StoreProvider>
     )
 }
