@@ -9,6 +9,8 @@ export function questionFactory(object: any): QuestionInterface | null {
 
     const { type, difficulty, category, question, correct_answer, incorrect_answers } = object
 
+    const questionText: string = question ?? ''
+    const parsedQuestionText = questionText.replace(/&quot;/g, '"').replace(/&#039;/g, "'")
     const questionType = type ?? ''
     const upperQuestionType = questionType.toUpperCase()
     const parsedType =
@@ -25,7 +27,7 @@ export function questionFactory(object: any): QuestionInterface | null {
 
     return {
         category: category ?? '',
-        question: question ?? '',
+        question: parsedQuestionText,
         correctAnswer: correct_answer ?? '',
         incorrectAnswers: incorrect_answers ?? [],
         type: parsedType,

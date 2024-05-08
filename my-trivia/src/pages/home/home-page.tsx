@@ -9,6 +9,7 @@ import { homeQuestionsAtom } from '@store'
 
 import { HomeContainer, Title } from './home-page-style'
 import { HOME_PAGE_STRINGS } from './home-page-strings'
+import { useCallback } from 'react'
 
 const RANDOM_QUESTIONS_AMOUNT = 10
 
@@ -25,14 +26,14 @@ export function HomePage() {
     } = useQuery({
         queryKey: ['home-questions'],
         queryFn: () => questionsService.getQuestions({ amount: RANDOM_QUESTIONS_AMOUNT }),
-        enabled: false,
+        enabled: homeQuestions === undefined || homeQuestions?.questions?.length === 1,
     })
 
-    function renderQuestions() {
-        const questionsList = questionsResponse as QuestionsListInterface
-        const shouldShowLoader = isLoading || isRequesting
+    const questionsList = questionsResponse as QuestionsListInterface
+    setHomeQuestions(questionsList)
 
-        setHomeQuestions(questionsList)
+    const renderQuestions = useCallback(() => {
+        const shouldShowLoader = isLoading || isRequesting
 
         if (shouldShowLoader) {
             return <CircularProgress color='primary' size={80} />
@@ -42,14 +43,14 @@ export function HomePage() {
             return <p>{error.message}</p>
         }
 
-        if (!questionsList || !questionsList.questions) {
+        if (!homeQuestions || !homeQuestions?.questions) {
             return null
         }
 
-        return questionsList.questions.map((question) => {
-            return <QuestionCardComponent {...question} />
+        return homeQuestions?.questions.map((question, index) => {
+            return <QuestionCardComponent key={index} itemKey={index} {...question} />
         })
-    }
+    }, [error, homeQuestions, isLoading, isRequesting])
 
     return (
         <HomeContainer>

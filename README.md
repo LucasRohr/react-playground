@@ -14,6 +14,7 @@ Project initial roadmap:
   - [ ] Styled components
   - [ ] Tailwind CSS
   - [ ] Chakra UI
+  - [ ] MUI (FKA Material UI)
 - Data fetch and state management
   - [ ] TanStack Query (FKA React Query)
   - [ ] Jotai
@@ -38,6 +39,7 @@ Project initial roadmap:
 - Prettier
 - React Router
 - Styled components
+- MUI (FKA Material UI)
 - TanStack Query (FKA React Query)
 - Jotai
 - React Hook Form

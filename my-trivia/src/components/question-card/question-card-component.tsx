@@ -1,10 +1,14 @@
+import { useAtom, useSetAtom } from 'jotai'
+
 import { SCORES } from '@constants'
 import { shuffleArray } from '@utils'
+import { historyQuestionsAtom, homeQuestionsAtom, scoreAtom } from '@store'
 
 import { QUESTION_CARD_COMPONENT_STRINGS } from './question-card-component-strings'
 import {
     AnswerButton,
     AnswerButtonsContainer,
+    AnswerButtonText,
     AnswerMessage,
     AnswerMessageHighlight,
     CardHeader,
@@ -25,6 +29,31 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
     const { category, question, difficulty, score, correctAnswer, incorrectAnswers, userAnswer } =
         props
 
+    const setScore = useSetAtom(scoreAtom)
+    const [homeQuestions, setHomeQuestions] = useAtom(homeQuestionsAtom)
+    const setHistoryQuestions = useSetAtom(historyQuestionsAtom)
+
+    const onPressAnswer = (answer: string) => {
+        const isCorrectAnswer = answer === correctAnswer
+        const questionIndex = homeQuestions.questions.findIndex(
+            (question) => question.correctAnswer === correctAnswer
+        )
+        const homeQuestionsCopy = { ...homeQuestions }
+        const updatedQuestion = {
+            ...homeQuestionsCopy.questions[questionIndex],
+            userAnswer: answer,
+        }
+
+        homeQuestionsCopy.questions[questionIndex] = updatedQuestion
+
+        setHomeQuestions(homeQuestionsCopy)
+        setHistoryQuestions((prevHistory) => [...prevHistory, updatedQuestion])
+
+        if (isCorrectAnswer) {
+            setScore((prevScore) => prevScore + score)
+        }
+    }
+
     const renderDifficultyDiamonds = () => {
         const difficultyScores = Object.values(SCORES)
 
@@ -40,8 +69,8 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
         shuffleArray(allAnswers)
 
         return allAnswers.map((answer) => (
-            <AnswerButton $isPrimary onClick={() => alert(score)}>
-                {answer}
+            <AnswerButton $isPrimary onClick={() => onPressAnswer(answer)}>
+                <AnswerButtonText>{answer}</AnswerButtonText>
             </AnswerButton>
         ))
     }
@@ -51,7 +80,7 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
 
         if (isCorrectAnswer) {
             const answerHighlightText =
-                QUESTION_CARD_COMPONENT_STRINGS.CORRECT_ANSWER_MESSAGE_PLUS.concat(userAnswer)
+                QUESTION_CARD_COMPONENT_STRINGS.CORRECT_ANSWER_MESSAGE_PLUS.concat(score.toString())
 
             return (
                 <CorrectAnswerContainer>
@@ -84,7 +113,7 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
     }
 
     return (
-        <QuestionCard>
+        <QuestionCard key={props.itemKey}>
             <CardHeader>
                 <CategoryLabel>
                     {QUESTION_CARD_COMPONENT_STRINGS.CATEGORY_LABEL}

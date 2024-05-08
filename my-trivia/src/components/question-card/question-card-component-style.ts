@@ -2,8 +2,9 @@ import styled from 'styled-components'
 import { StyledButton } from '@components/button/button-component-style'
 
 const QuestionCard = styled.div`
-    width: 60%;
-    max-width: 60%;
+    width: 75%;
+    max-width: 75%;
+    min-width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,7 +25,7 @@ const CardHeader = styled.div`
 `
 
 const CategoryLabel = styled.span`
-    font-size: 22;
+    font-size: 20px;
     font-weight: bold;
     color: ${(props) => props.theme.LIGHT_PRIMARY};
 `
@@ -41,7 +42,7 @@ const DifficultyContainer = styled.div`
 `
 
 const DifficultyLabel = styled.span`
-    font-size: 24;
+    font-size: 20px;
     font-weight: bold;
     color: ${(props) => props.theme.LIGHT_PRIMARY};
     padding-right: 0.8em;
@@ -68,17 +69,31 @@ const QuestionText = styled.span`
 `
 
 const AnswerButtonsContainer = styled.div`
+    width: 100%;
+    min-width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    padding-right: 1.5em;
 `
 
 const AnswerButton = styled(StyledButton)`
-    font-size: 14px;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 14px;
+`
+
+const AnswerButtonText = styled.span`
+    font-size: 18px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
 `
 
 const CorrectAnswerContainer = styled.div`
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,13 +107,14 @@ const IncorrectAnswerContainer = styled(CorrectAnswerContainer)`
 `
 
 const AnswerMessage = styled.span`
+    background-color: transparent;
     font-size: 28px;
     font-weight: bold;
-    background-color: ${(props) => props.theme.LIGHT_BLACK};
+    color: ${(props) => props.theme.LIGHT_BLACK};
 `
 
 const AnswerMessageHighlight = styled(AnswerMessage)`
-    background-color: ${(props) => props.theme.WHITE};
+    color: ${(props) => props.theme.WHITE};
 `
 
 export {
@@ -113,6 +129,7 @@ export {
     QuestionText,
     AnswerButtonsContainer,
     AnswerButton,
+    AnswerButtonText,
     CorrectAnswerContainer,
     IncorrectAnswerContainer,
     AnswerMessage,
