@@ -31,7 +31,7 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
 
     const setScore = useSetAtom(scoreAtom)
     const [homeQuestions, setHomeQuestions] = useAtom(homeQuestionsAtom)
-    const setHistoryQuestions = useSetAtom(historyQuestionsAtom)
+    const [historyQuestions, setHistoryQuestions] = useAtom(historyQuestionsAtom)
 
     const onPressAnswer = (answer: string) => {
         const isCorrectAnswer = answer === correctAnswer
@@ -43,11 +43,16 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
             ...homeQuestionsCopy.questions[questionIndex],
             userAnswer: answer,
         }
+        const hasHistory = historyQuestions[0].category !== ''
+
+        if (hasHistory) {
+            setHistoryQuestions((prevHistory) => [...prevHistory, updatedQuestion])
+        } else {
+            setHistoryQuestions([updatedQuestion])
+        }
 
         homeQuestionsCopy.questions[questionIndex] = updatedQuestion
-
         setHomeQuestions(homeQuestionsCopy)
-        setHistoryQuestions((prevHistory) => [...prevHistory, updatedQuestion])
 
         if (isCorrectAnswer) {
             setScore((prevScore) => prevScore + score)
