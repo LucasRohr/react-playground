@@ -57,10 +57,14 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
     const renderDifficultyDiamonds = () => {
         const difficultyScores = Object.values(SCORES)
 
-        return difficultyScores.map((score) => {
+        return difficultyScores.map((score, index) => {
             const isFilledDiamond = score <= SCORES[difficulty as keyof typeof SCORES]
 
-            return isFilledDiamond ? <DifficultyDiamondFilled /> : <DifficultyDiamondEmpty />
+            return isFilledDiamond ? (
+                <DifficultyDiamondFilled key={index} />
+            ) : (
+                <DifficultyDiamondEmpty key={index} />
+            )
         })
     }
 
@@ -68,8 +72,8 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
         const allAnswers = [...incorrectAnswers, correctAnswer]
         shuffleArray(allAnswers)
 
-        return allAnswers.map((answer) => (
-            <AnswerButton $isPrimary onClick={() => onPressAnswer(answer)}>
+        return allAnswers.map((answer, index) => (
+            <AnswerButton key={index} $isPrimary onClick={() => onPressAnswer(answer)}>
                 <AnswerButtonText>{answer}</AnswerButtonText>
             </AnswerButton>
         ))
@@ -113,7 +117,7 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
     }
 
     return (
-        <QuestionCard key={props.itemKey}>
+        <QuestionCard>
             <CardHeader>
                 <CategoryLabel>
                     {QUESTION_CARD_COMPONENT_STRINGS.CATEGORY_LABEL}

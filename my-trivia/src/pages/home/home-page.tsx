@@ -9,7 +9,7 @@ import { homeQuestionsAtom } from '@store'
 
 import { HomeContainer, Title } from './home-page-style'
 import { HOME_PAGE_STRINGS } from './home-page-strings'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 
 const RANDOM_QUESTIONS_AMOUNT = 10
 
@@ -29,8 +29,10 @@ export function HomePage() {
         enabled: homeQuestions === undefined || homeQuestions?.questions?.length === 1,
     })
 
-    const questionsList = questionsResponse as QuestionsListInterface
-    setHomeQuestions(questionsList)
+    useEffect(() => {
+        const questionsList = questionsResponse as QuestionsListInterface
+        setHomeQuestions(questionsList)
+    }, [questionsResponse, setHomeQuestions])
 
     const renderQuestions = useCallback(() => {
         const shouldShowLoader = isLoading || isRequesting
@@ -48,7 +50,7 @@ export function HomePage() {
         }
 
         return homeQuestions?.questions.map((question, index) => {
-            return <QuestionCardComponent key={index} itemKey={index} {...question} />
+            return <QuestionCardComponent key={index} {...question} />
         })
     }, [error, homeQuestions, isLoading, isRequesting])
 

@@ -11,7 +11,9 @@ export function questionFactory(object: any): QuestionInterface | null {
 
     const questionText: string = question ?? ''
     const parsedQuestionText = questionText.replace(/&quot;/g, '"').replace(/&#039;/g, "'")
+
     const questionType = type ?? ''
+
     const upperQuestionType = questionType.toUpperCase()
     const parsedType =
         QUESTIONS_FILTERS.TYPE[upperQuestionType as keyof typeof QUESTIONS_FILTERS.TYPE]
@@ -23,13 +25,17 @@ export function questionFactory(object: any): QuestionInterface | null {
             upperQuestionDifficulty as keyof typeof QUESTIONS_FILTERS.DIFFICULTY
         ]
 
+    const parsedIncorrectAnswers = incorrect_answers.map((answerText: string) =>
+        answerText.replace(/&quot;/g, '"').replace(/&#039;/g, "'")
+    )
+
     const parsedScore = SCORES[parsedDifficulty as keyof typeof SCORES]
 
     return {
         category: category ?? '',
         question: parsedQuestionText,
         correctAnswer: correct_answer ?? '',
-        incorrectAnswers: incorrect_answers ?? [],
+        incorrectAnswers: parsedIncorrectAnswers ?? [],
         type: parsedType,
         difficulty: parsedDifficulty,
         score: parsedScore,
