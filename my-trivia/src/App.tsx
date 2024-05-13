@@ -23,6 +23,13 @@ const materialTheme = createTheme({
             light: APP_COLORS.LIGHT_BLACK,
             dark: APP_COLORS.DARK_BLACK,
         },
+        text: {
+            primary: APP_COLORS.LIGHT_PRIMARY,
+            secondary: APP_COLORS.DARK_PRIMARY,
+        },
+        background: {
+            default: APP_COLORS.LIGHT_PRIMARY,
+        },
     },
 })
 
