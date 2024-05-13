@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { StyledButton } from '@components/button/button-component-style'
+import { StyledButton } from '@components/mt-button/mt-button-component-style'
 
 const QuestionCard = styled.div`
     width: 75%;

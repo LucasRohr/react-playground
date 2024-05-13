@@ -1,6 +1,6 @@
 import { useNavigate, useRouteError } from 'react-router-dom'
 
-import { Button } from '../button/button-component'
+import { MTButton } from '../mt-button/mt-button-component'
 
 import { StyledError, Subtitle, Title, ErrorMessage } from './error-component-style'
 import { ERROR_COMPONENT_STRINGS } from './error-component-strings'
@@ -21,9 +21,9 @@ export function ErrorComponent() {
             <Title>{ERROR_COMPONENT_STRINGS.TITLE}</Title>
             <Subtitle>{ERROR_COMPONENT_STRINGS.SUBTITLE}</Subtitle>
             <ErrorMessage>{errorMessage}</ErrorMessage>
-            <Button $isPrimary onClick={() => navigate('/')}>
+            <MTButton $isPrimary onClick={() => navigate('/')}>
                 {ERROR_COMPONENT_STRINGS.BACK_BUTTON_LABEL}
-            </Button>
+            </MTButton>
         </StyledError>
     )
 }

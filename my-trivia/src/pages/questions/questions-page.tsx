@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 
 import { APP_COLORS, QUESTIONS_FILTERS } from '@constants'
-import { Button } from '@components'
+import { MTButton } from '@components'
 
 import { QUESTIONS_PAGE_STRINGS } from './questions-page-strings'
 import {
@@ -144,9 +144,9 @@ export function QuestionsPage() {
                         </Select>
                     </FormControl>
                 </SelectTypeContainer>
-                <Button $isPrimary type='submit' onClick={() => {}}>
+                <MTButton $isPrimary type='submit' onClick={() => {}}>
                     {QUESTIONS_PAGE_STRINGS.SUBMIT_BUTTON_LABEL}
-                </Button>
+                </MTButton>
             </QuestionsSearchForm>
         </QuestionsContainer>
     )
