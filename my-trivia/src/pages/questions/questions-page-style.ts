@@ -31,6 +31,12 @@ const QuestionsSearchForm = styled.form`
     justify-content: start;
     align-items: start;
     width: 40%;
+    margin-bottom: 60px;
+`
+
+const SelectCategoryContainer = styled.div`
+    width: 100%;
+    margin-top: 16px;
 `
 
 const SelectDifficultyContainer = styled.div`
@@ -47,6 +53,7 @@ export {
     QuestionsContainer,
     Title,
     QuestionsSearchForm,
+    SelectCategoryContainer,
     SelectDifficultyContainer,
     SelectTypeContainer,
 }
