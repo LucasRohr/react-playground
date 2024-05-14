@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form'
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
-import { APP_COLORS, QUESTIONS_FILTERS } from '@constants'
-import { MTButton } from '@components'
+import { QUESTIONS_FILTERS } from '@constants'
+import { MTButton, MTInput } from '@components'
 
 import { QUESTIONS_PAGE_STRINGS } from './questions-page-strings'
 import {
@@ -39,19 +39,74 @@ const QUESTION_FILTER_LABELS = Object.freeze({
     },
 })
 
-const INPUT_IDS = {
+const INPUT_NAMES = Object.freeze({
+    QUANTITY: 'quantity',
+    CATEGORY: 'category',
+    DIFFICULTY: 'difficulty',
+    TYPE: 'type',
+})
+
+const INPUT_IDS = Object.freeze({
     QUANTITY: 'questions-search-quantity',
     CATEGORY: 'questions-search-category',
     DIFFICULTY: 'questions-search-difficulty',
     TYPE: 'questions-search-type',
-}
+})
 
 const QUANTITY_INPUT_MAX_VALUE = 30
 
 export function QuestionsPage() {
-    const { register, handleSubmit } = useForm<QuestionsSearchFormInterface>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<QuestionsSearchFormInterface>({
         defaultValues: FORM_DEFAULT_VALUES,
     })
+
+    const renderQuantityField = () => {
+        const error = errors.quantity?.message
+
+        return (
+            <MTInput
+                id={INPUT_IDS.QUANTITY}
+                label={QUESTIONS_PAGE_STRINGS.QUANTITY_INPUT_LABEL}
+                type='number'
+                error={error}
+                registerData={register(INPUT_NAMES.QUANTITY, {
+                    required: QUESTIONS_PAGE_STRINGS.QUANTITY_INPUT_REQUIRED,
+                    max: {
+                        value: QUANTITY_INPUT_MAX_VALUE,
+                        message: QUESTIONS_PAGE_STRINGS.QUANTITY_INPUT_MAX,
+                    },
+                })}
+            />
+        )
+    }
+
+    const renderCategoryField = () => {
+        const error = errors.category?.message
+
+        return (
+            <MTInput
+                fullWidth
+                id={INPUT_IDS.CATEGORY}
+                label={QUESTIONS_PAGE_STRINGS.CATEGORY_INPUT_LABEL}
+                error={error}
+                registerData={register(INPUT_NAMES.CATEGORY, {
+                    required: QUESTIONS_PAGE_STRINGS.CATEGORY_INPUT_REQUIRED,
+                    maxLength: {
+                        value: QUANTITY_INPUT_MAX_VALUE,
+                        message: QUESTIONS_PAGE_STRINGS.CATEGORY_INPUT_MAX,
+                    },
+                })}
+            />
+        )
+    }
+
+    const renderQuestions = () => {
+        return null
+    }
 
     return (
         <QuestionsContainer>
@@ -62,43 +117,8 @@ export function QuestionsPage() {
                     console.log(data)
                 })}
             >
-                <TextField
-                    id={INPUT_IDS.QUANTITY}
-                    label={QUESTIONS_PAGE_STRINGS.QUANTITY_INPUT_LABEL}
-                    type='number'
-                    variant='filled'
-                    margin='normal'
-                    style={{
-                        caretColor: APP_COLORS.LIGHT_PRIMARY,
-                        color: APP_COLORS.LIGHT_PRIMARY,
-                    }}
-                    {...register('quantity', {
-                        required: QUESTIONS_PAGE_STRINGS.QUANTITY_INPUT_REQUIRED,
-                        max: {
-                            value: QUANTITY_INPUT_MAX_VALUE,
-                            message: QUESTIONS_PAGE_STRINGS.QUANTITY_INPUT_MAX,
-                        },
-                    })}
-                />
-                <TextField
-                    fullWidth
-                    id={INPUT_IDS.CATEGORY}
-                    label={QUESTIONS_PAGE_STRINGS.CATEGORY_INPUT_LABEL}
-                    type='text'
-                    variant='filled'
-                    margin='normal'
-                    style={{
-                        caretColor: APP_COLORS.LIGHT_PRIMARY,
-                        color: APP_COLORS.LIGHT_PRIMARY,
-                    }}
-                    {...register('category', {
-                        required: QUESTIONS_PAGE_STRINGS.CATEGORY_INPUT_REQUIRED,
-                        maxLength: {
-                            value: QUANTITY_INPUT_MAX_VALUE,
-                            message: QUESTIONS_PAGE_STRINGS.CATEGORY_INPUT_MAX,
-                        },
-                    })}
-                />
+                {renderQuantityField()}
+                {renderCategoryField()}
                 <SelectDifficultyContainer>
                     <FormControl fullWidth>
                         <InputLabel id={INPUT_IDS.DIFFICULTY}>
@@ -148,6 +168,7 @@ export function QuestionsPage() {
                     {QUESTIONS_PAGE_STRINGS.SUBMIT_BUTTON_LABEL}
                 </MTButton>
             </QuestionsSearchForm>
+            {renderQuestions()}
         </QuestionsContainer>
     )
 }
