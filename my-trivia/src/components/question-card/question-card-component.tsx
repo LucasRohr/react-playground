@@ -26,24 +26,35 @@ import {
 import { QuestionCardComponentPropTypes } from './question-card-component-types'
 
 export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
-    const { category, question, difficulty, score, correctAnswer, incorrectAnswers, userAnswer } =
-        props
+    const {
+        category,
+        question,
+        difficulty,
+        score,
+        correctAnswer,
+        incorrectAnswers,
+        userAnswer,
+        questionsAtom,
+    } = props
 
     const setScore = useSetAtom(scoreAtom)
-    const [homeQuestions, setHomeQuestions] = useAtom(homeQuestionsAtom)
+    const [questions, setQuestions] = useAtom(questionsAtom ?? homeQuestionsAtom)
     const [historyQuestions, setHistoryQuestions] = useAtom(historyQuestionsAtom)
 
     const onPressAnswer = (answer: string) => {
         const isCorrectAnswer = answer === correctAnswer
-        const questionIndex = homeQuestions.questions.findIndex(
+        const hasHistory = historyQuestions.length > 0
+
+        const questionIndex = questions.questions.findIndex(
             (question) => question.correctAnswer === correctAnswer
         )
-        const homeQuestionsCopy = { ...homeQuestions }
+
+        const questionsCopy = { ...questions }
+
         const updatedQuestion = {
-            ...homeQuestionsCopy.questions[questionIndex],
+            ...questionsCopy.questions[questionIndex],
             userAnswer: answer,
         }
-        const hasHistory = historyQuestions[0].category !== ''
 
         if (hasHistory) {
             setHistoryQuestions((prevHistory) => [...prevHistory, updatedQuestion])
@@ -51,8 +62,8 @@ export function QuestionCardComponent(props: QuestionCardComponentPropTypes) {
             setHistoryQuestions([updatedQuestion])
         }
 
-        homeQuestionsCopy.questions[questionIndex] = updatedQuestion
-        setHomeQuestions(homeQuestionsCopy)
+        questionsCopy.questions[questionIndex] = updatedQuestion
+        setQuestions(questionsCopy)
 
         if (isCorrectAnswer) {
             setScore((prevScore) => prevScore + score)

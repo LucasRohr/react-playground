@@ -117,7 +117,7 @@ export function QuestionsPage() {
         }
 
         return searchQuestions?.questions.map((question, index) => (
-            <QuestionCardComponent key={index} {...question} />
+            <QuestionCardComponent key={index} questionsAtom={searchQuestionsAtom} {...question} />
         ))
     }, [error, searchQuestions, shouldSearch, isLoading, isRequesting])
 
@@ -142,8 +142,6 @@ export function QuestionsPage() {
     }
 
     const renderCategoryField = () => {
-        const error = errors.category?.message
-
         const renderCategories = () =>
             Object.values(QUESTION_CATEGORIES).map((category) => (
                 <MenuItem value={category.ID}>{category.LABEL}</MenuItem>

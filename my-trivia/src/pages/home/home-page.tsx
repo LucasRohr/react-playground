@@ -50,7 +50,7 @@ export function HomePage() {
         }
 
         return homeQuestions?.questions.map((question, index) => (
-            <QuestionCardComponent key={index} {...question} />
+            <QuestionCardComponent key={index} questionsAtom={homeQuestionsAtom} {...question} />
         ))
     }, [error, homeQuestions, isLoading, isRequesting])
 

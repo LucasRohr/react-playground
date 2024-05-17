@@ -1,3 +1,6 @@
+import { QuestionsListInterface } from '@factories'
+import { PrimitiveAtom } from 'jotai'
+
 export interface QuestionCardComponentPropTypes {
     category: string
     difficulty: string
@@ -6,4 +9,5 @@ export interface QuestionCardComponentPropTypes {
     incorrectAnswers: string[]
     score: number
     userAnswer?: string
+    questionsAtom?: PrimitiveAtom<QuestionsListInterface>
 }

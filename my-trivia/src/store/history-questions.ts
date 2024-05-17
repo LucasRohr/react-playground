@@ -1,15 +1,6 @@
 import { atom } from 'jotai'
+import { QuestionInterface } from '@factories'
 
-const historyQuestionsAtom = atom([
-    {
-        type: '',
-        difficulty: '',
-        score: 0,
-        category: '',
-        question: '',
-        correctAnswer: '',
-        incorrectAnswers: [''],
-    },
-])
+const historyQuestionsAtom = atom<QuestionInterface[]>([])
 
 export { historyQuestionsAtom }

@@ -1,6 +1,7 @@
 import { atom } from 'jotai'
+import { QuestionsListInterface } from '@factories'
 
-const searchQuestionsAtom = atom({
+const searchQuestionsAtom = atom<QuestionsListInterface>({
     questions: [
         {
             type: '',
