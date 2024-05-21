@@ -167,6 +167,61 @@ export function QuestionsPage() {
         )
     }
 
+    const renderDifficultyField = () => {
+        return (
+            <SelectDifficultyContainer>
+                <FormControl fullWidth>
+                    <InputLabel id={INPUT_IDS.DIFFICULTY}>
+                        {QUESTIONS_PAGE_STRINGS.DIFFICULTY_INPUT_LABEL}
+                    </InputLabel>
+                    <Select
+                        margin='dense'
+                        labelId={INPUT_IDS.DIFFICULTY}
+                        id={INPUT_IDS.DIFFICULTY}
+                        label={QUESTIONS_PAGE_STRINGS.DIFFICULTY_INPUT_LABEL}
+                        {...register(INPUT_NAMES.DIFFICULTY)}
+                    >
+                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.EASY.toLowerCase()}>
+                            {QUESTION_FILTER_LABELS.DIFFICULTY.EASY}
+                        </MenuItem>
+                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.MEDIUM.toLowerCase()}>
+                            {QUESTION_FILTER_LABELS.DIFFICULTY.MEDIUM}
+                        </MenuItem>
+                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.HARD.toLowerCase()}>
+                            {QUESTION_FILTER_LABELS.DIFFICULTY.HARD}
+                        </MenuItem>
+                    </Select>
+                </FormControl>
+            </SelectDifficultyContainer>
+        )
+    }
+
+    const renderTypeField = () => {
+        return (
+            <SelectTypeContainer>
+                <FormControl fullWidth>
+                    <InputLabel id={INPUT_IDS.TYPE}>
+                        {QUESTIONS_PAGE_STRINGS.TYPE_INPUT_LABEL}
+                    </InputLabel>
+                    <Select
+                        margin='dense'
+                        labelId={INPUT_IDS.TYPE}
+                        id={INPUT_IDS.TYPE}
+                        label={QUESTIONS_PAGE_STRINGS.TYPE_INPUT_LABEL}
+                        {...register(INPUT_NAMES.TYPE)}
+                    >
+                        <MenuItem value={QUESTIONS_FILTERS.TYPE.MULTIPLE.toLowerCase()}>
+                            {QUESTION_FILTER_LABELS.TYPE.MULTIPLE}
+                        </MenuItem>
+                        <MenuItem value={QUESTIONS_FILTERS.TYPE.BOOLEAN.toLowerCase()}>
+                            {QUESTION_FILTER_LABELS.TYPE.BOOLEAN}
+                        </MenuItem>
+                    </Select>
+                </FormControl>
+            </SelectTypeContainer>
+        )
+    }
+
     return (
         <QuestionsContainer>
             <Title>{QUESTIONS_PAGE_STRINGS.TITLE}</Title>
@@ -180,51 +235,9 @@ export function QuestionsPage() {
             >
                 {renderQuantityField()}
                 {renderCategoryField()}
-                <SelectDifficultyContainer>
-                    <FormControl fullWidth>
-                        <InputLabel id={INPUT_IDS.DIFFICULTY}>
-                            {QUESTIONS_PAGE_STRINGS.DIFFICULTY_INPUT_LABEL}
-                        </InputLabel>
-                        <Select
-                            margin='dense'
-                            labelId={INPUT_IDS.DIFFICULTY}
-                            id={INPUT_IDS.DIFFICULTY}
-                            label={QUESTIONS_PAGE_STRINGS.DIFFICULTY_INPUT_LABEL}
-                            {...register(INPUT_NAMES.DIFFICULTY)}
-                        >
-                            <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.EASY.toLowerCase()}>
-                                {QUESTION_FILTER_LABELS.DIFFICULTY.EASY}
-                            </MenuItem>
-                            <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.MEDIUM.toLowerCase()}>
-                                {QUESTION_FILTER_LABELS.DIFFICULTY.MEDIUM}
-                            </MenuItem>
-                            <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.HARD.toLowerCase()}>
-                                {QUESTION_FILTER_LABELS.DIFFICULTY.HARD}
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                </SelectDifficultyContainer>
-                <SelectTypeContainer>
-                    <FormControl fullWidth>
-                        <InputLabel id={INPUT_IDS.TYPE}>
-                            {QUESTIONS_PAGE_STRINGS.TYPE_INPUT_LABEL}
-                        </InputLabel>
-                        <Select
-                            margin='dense'
-                            labelId={INPUT_IDS.TYPE}
-                            id={INPUT_IDS.TYPE}
-                            label={QUESTIONS_PAGE_STRINGS.TYPE_INPUT_LABEL}
-                            {...register(INPUT_NAMES.TYPE)}
-                        >
-                            <MenuItem value={QUESTIONS_FILTERS.TYPE.MULTIPLE.toLowerCase()}>
-                                {QUESTION_FILTER_LABELS.TYPE.MULTIPLE}
-                            </MenuItem>
-                            <MenuItem value={QUESTIONS_FILTERS.TYPE.BOOLEAN.toLowerCase()}>
-                                {QUESTION_FILTER_LABELS.TYPE.BOOLEAN}
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                </SelectTypeContainer>
+                {renderDifficultyField()}
+                {renderTypeField()}
+
                 <MTButton $isPrimary type='submit' onClick={() => {}}>
                     {QUESTIONS_PAGE_STRINGS.SUBMIT_BUTTON_LABEL}
                 </MTButton>
