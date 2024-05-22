@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { useAtom } from 'jotai'
+import { useAtomValue } from 'jotai'
 
 import { createdQuestionsAtom } from '@store'
 import type { CreatedQuestionInterface } from '@services'
 
 interface UseCreatedQuestionsInterface {
-    newQuestion?: CreatedQuestionInterface
     filters?: {
         category: string
         difficulty: string
@@ -17,21 +16,25 @@ export function useCreatedQuestions(params: UseCreatedQuestionsInterface) {
     const [filteredCreatedQuestions, setFilteredCreatedQuestions] = useState<
         CreatedQuestionInterface[]
     >([])
-    const [createdQuestions, setCreatedQuestions] = useAtom(createdQuestionsAtom)
+    const createdQuestions = useAtomValue(createdQuestionsAtom)
 
-    const { newQuestion, filters } = params
+    const { filters } = params
 
-    if (newQuestion) {
-        setCreatedQuestions([...createdQuestions, newQuestion])
-    }
-
+    // Condition to filter the created questions for applying them on question search results
     if (filters) {
-        const questions = createdQuestions.filter(
-            (question) =>
-                question.category === filters.category &&
-                question.difficulty === filters.difficulty &&
-                question.type === filters.type
-        )
+        const questions = createdQuestions.filter((question) => {
+            const isSameCategory = filters.category.length
+                ? question.category === filters.category
+                : true
+
+            const isSameDifficulty = filters.difficulty.length
+                ? question.difficulty === filters.difficulty
+                : true
+
+            const isSameType = filters.type.length ? question.type === filters.type : true
+
+            return isSameCategory && isSameDifficulty && isSameType
+        })
 
         setFilteredCreatedQuestions(questions)
     }

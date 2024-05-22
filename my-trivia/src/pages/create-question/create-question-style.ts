@@ -34,4 +34,58 @@ const CreateQuestionSearchForm = styled.form`
     margin-bottom: 60px;
 `
 
-export { CreateQuestionContainer, Title, CreateQuestionSearchForm }
+const SelectCategoryContainer = styled.div`
+    width: 100%;
+    margin-top: 16px;
+`
+
+const SelectDifficultyContainer = styled.div`
+    width: 100%;
+    margin-top: 16px;
+`
+
+const SelectTypeContainer = styled(SelectDifficultyContainer)`
+    margin-top: 24px;
+    margin-bottom: 30px;
+`
+
+const AnswersContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+`
+
+const Answerslabel = styled.span`
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 12px;
+`
+
+const IncorrectAnswersContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+`
+
+const SubmitButtonWrapper = styled.div`
+    width: 100%;
+    margin-top: 30px;
+`
+
+export {
+    CreateQuestionContainer,
+    Title,
+    CreateQuestionSearchForm,
+    SelectCategoryContainer,
+    SelectDifficultyContainer,
+    SelectTypeContainer,
+    AnswersContainer,
+    Answerslabel,
+    IncorrectAnswersContainer,
+    SubmitButtonWrapper,
+}

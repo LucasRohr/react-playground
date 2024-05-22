@@ -1,5 +1,5 @@
 export { APP_COLORS } from './colors'
 export { PAGES } from './pages'
-export { QUESTIONS_FILTERS } from './questions-filters'
+export { QUESTIONS_FILTERS, QUESTION_FILTER_LABELS } from './questions-filters'
 export { SCORES } from './scores'
 export { QUESTION_CATEGORIES } from './question-categories'

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { APP_COLORS } from '@constants'
 
 const InputContainer = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: start;

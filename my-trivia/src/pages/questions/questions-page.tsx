@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
-import { QUESTION_CATEGORIES, QUESTIONS_FILTERS } from '@constants'
+import { QUESTION_CATEGORIES, QUESTION_FILTER_LABELS, QUESTIONS_FILTERS } from '@constants'
 import { MTButton, MTInput, QuestionCardComponent } from '@components'
 
 import { QUESTIONS_PAGE_STRINGS } from './questions-page-strings'
@@ -32,18 +32,6 @@ const FORM_DEFAULT_VALUES = Object.freeze({
     category: '',
     difficulty: '',
     type: '',
-})
-
-const QUESTION_FILTER_LABELS = Object.freeze({
-    DIFFICULTY: {
-        EASY: 'Easy',
-        MEDIUM: 'Medium',
-        HARD: 'Hard',
-    },
-    TYPE: {
-        MULTIPLE: 'Multiple choice',
-        BOOLEAN: 'True/False',
-    },
 })
 
 const INPUT_NAMES = Object.freeze({
