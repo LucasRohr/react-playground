@@ -30,6 +30,9 @@ const materialTheme = createTheme({
         background: {
             default: APP_COLORS.LIGHT_PRIMARY,
         },
+        success: {
+            main: APP_COLORS.LIGHT_PRIMARY,
+        },
     },
 })
 

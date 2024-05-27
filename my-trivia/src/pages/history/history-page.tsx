@@ -11,7 +11,7 @@ export function HistoryPage() {
     const historyQuestions = useAtomValue(historyQuestionsAtom)
 
     const renderQuestions = useCallback(() => {
-        const hasAnswers = historyQuestions[0].category !== ''
+        const hasAnswers = historyQuestions.length
 
         if (!hasAnswers) {
             return (

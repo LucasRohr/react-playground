@@ -58,9 +58,9 @@ const AnswersContainer = styled.div`
 `
 
 const Answerslabel = styled.span`
+    color: ${APP_COLORS.LIGHT_PRIMARY};
     font-size: 20px;
     font-weight: bold;
-    margin-top: 20px;
     margin-bottom: 12px;
 `
 
@@ -77,6 +77,13 @@ const SubmitButtonWrapper = styled.div`
     margin-top: 30px;
 `
 
+const SelectErrorText = styled.span`
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 8px;
+    color: ${APP_COLORS.ERROR};
+`
+
 export {
     CreateQuestionContainer,
     Title,
@@ -88,4 +95,5 @@ export {
     Answerslabel,
     IncorrectAnswersContainer,
     SubmitButtonWrapper,
+    SelectErrorText,
 }
