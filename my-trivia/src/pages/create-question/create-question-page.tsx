@@ -7,9 +7,11 @@ import { createdQuestionsAtom } from '@store'
 import { CREATE_QUESTION_PAGE_STRINGS } from './create-question-strings'
 import {
     AnswersContainer,
-    Answerslabel,
+    AnswersLabel,
     CreateQuestionContainer,
     CreateQuestionSearchForm,
+    IncorrectAnswerInputWrapper,
+    IncorrectAnswersContainer,
     SelectCategoryContainer,
     SelectDifficultyContainer,
     SelectErrorText,
@@ -191,7 +193,7 @@ export function CreateQuestionPage() {
 
             return (
                 <AnswersContainer>
-                    <Answerslabel>{CREATE_QUESTION_PAGE_STRINGS.CORRECT_ANSWER_LABEL}</Answerslabel>
+                    <AnswersLabel>{CREATE_QUESTION_PAGE_STRINGS.CORRECT_ANSWER_LABEL}</AnswersLabel>
                     <Controller
                         control={control}
                         name={INPUT_NAMES.CORRECT_ANSWER}
@@ -221,7 +223,44 @@ export function CreateQuestionPage() {
         }
 
         const renderMultipleTypeFields = () => {
-            return null
+            const incorrectAnswersIndexes = [0, 1, 2]
+
+            const { correctAnswer, incorrectAnswers } = errors
+            const parsedIncorrectAnswers = incorrectAnswers ?? []
+
+            const renderIncorrectAnswers = () =>
+                incorrectAnswersIndexes.map((index) => (
+                    <IncorrectAnswerInputWrapper>
+                        <MTInput
+                            id={`${INPUT_IDS.INCORRECT_ANSWER}${index}`}
+                            label={`${CREATE_QUESTION_PAGE_STRINGS.INCORRECT_ANSWER_LABEL} ${index + 1}`}
+                            error={parsedIncorrectAnswers[index]?.message}
+                            registerData={register(`${INPUT_NAMES.INCORRECT_ANSWER}.${index}`, {
+                                required: CREATE_QUESTION_PAGE_STRINGS.INCORRECT_ANSWERS_REQUIRED,
+                            })}
+                        />
+                    </IncorrectAnswerInputWrapper>
+                ))
+
+            return (
+                <AnswersContainer>
+                    <AnswersLabel>{CREATE_QUESTION_PAGE_STRINGS.ANSWERS_LABEL}</AnswersLabel>
+                    <MTInput
+                        id={INPUT_IDS.CORRECT_ANSWER}
+                        label={CREATE_QUESTION_PAGE_STRINGS.CORRECT_ANSWER_LABEL}
+                        error={correctAnswer?.message}
+                        registerData={register(INPUT_NAMES.CORRECT_ANSWER, {
+                            required: CREATE_QUESTION_PAGE_STRINGS.CORRECT_ANSWER_REQUIRED,
+                        })}
+                    />
+                    <AnswersLabel>
+                        {CREATE_QUESTION_PAGE_STRINGS.INCORRECT_ANSWER_LABEL}
+                    </AnswersLabel>
+                    <IncorrectAnswersContainer>
+                        {renderIncorrectAnswers()}
+                    </IncorrectAnswersContainer>
+                </AnswersContainer>
+            )
         }
 
         if (!type) {

@@ -13,7 +13,7 @@ const INPUT_NAMES = Object.freeze({
     DIFFICULTY: 'difficulty',
     TYPE: 'type',
     CORRECT_ANSWER: 'correctAnswer',
-    INCORRECT_ANSWER: 'incorrectAnswer',
+    INCORRECT_ANSWER: 'incorrectAnswers',
 })
 
 const INPUT_IDS = Object.freeze({
