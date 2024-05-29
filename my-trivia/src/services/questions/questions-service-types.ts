@@ -5,14 +5,4 @@ interface GetQuestionsParamsInterface {
     type?: string
 }
 
-interface CreateQuestionDataInterface {
-    id: number
-    question: string
-    category: string
-    difficulty: string
-    type: string
-    correctAnswer: string
-    incorrectAnswers: string[]
-}
-
-export type { GetQuestionsParamsInterface, CreateQuestionDataInterface }
+export type { GetQuestionsParamsInterface }

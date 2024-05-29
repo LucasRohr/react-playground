@@ -64,6 +64,11 @@ const AnswersLabel = styled.span`
     margin-bottom: 12px;
 `
 
+const IncorrectAnswersLabel = styled(AnswersLabel)`
+    margin-top: 12px;
+    font-size: 18px;
+`
+
 const IncorrectAnswersContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -101,4 +106,5 @@ export {
     SubmitButtonWrapper,
     SelectErrorText,
     IncorrectAnswerInputWrapper,
+    IncorrectAnswersLabel,
 }

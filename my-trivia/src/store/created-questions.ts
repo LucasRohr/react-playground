@@ -1,6 +1,7 @@
-import { CreatedQuestionInterface } from '@services'
 import { atom } from 'jotai'
 
-const createdQuestionsAtom = atom<CreatedQuestionInterface[]>([])
+import { QuestionInterface } from '@factories'
+
+const createdQuestionsAtom = atom<QuestionInterface[]>([])
 
 export { createdQuestionsAtom }

@@ -1,8 +1,6 @@
-import { useState } from 'react'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 
-import { createdQuestionsAtom } from '@store'
-import type { CreatedQuestionInterface } from '@services'
+import { createdQuestionsAtom, homeQuestionsAtom, searchQuestionsAtom } from '@store'
 
 interface UseCreatedQuestionsInterface {
     filters?: {
@@ -13,10 +11,10 @@ interface UseCreatedQuestionsInterface {
 }
 
 export function useCreatedQuestions(params: UseCreatedQuestionsInterface) {
-    const [filteredCreatedQuestions, setFilteredCreatedQuestions] = useState<
-        CreatedQuestionInterface[]
-    >([])
     const createdQuestions = useAtomValue(createdQuestionsAtom)
+
+    const setHomeQuestions = useSetAtom(homeQuestionsAtom)
+    const setSearchQuestions = useSetAtom(searchQuestionsAtom)
 
     const { filters } = params
 
@@ -36,8 +34,14 @@ export function useCreatedQuestions(params: UseCreatedQuestionsInterface) {
             return isSameCategory && isSameDifficulty && isSameType
         })
 
-        setFilteredCreatedQuestions(questions)
+        setHomeQuestions((prevQuestions) => ({
+            questions: [...prevQuestions.questions, ...questions],
+        }))
+    } else {
+        setSearchQuestions((prevQuestions) => ({
+            questions: [...prevQuestions.questions, ...createdQuestions],
+        }))
     }
 
-    return { createdQuestions, filteredCreatedQuestions }
+    return { createdQuestions }
 }

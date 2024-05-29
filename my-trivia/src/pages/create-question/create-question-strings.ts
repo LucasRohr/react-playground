@@ -11,7 +11,7 @@ export const CREATE_QUESTION_PAGE_STRINGS = Object.freeze({
     ANSWERS_LABEL: 'Question answers',
     CORRECT_ANSWER_LABEL: 'Correct answer',
     CORRECT_ANSWER_REQUIRED: 'Please inform the correct answer',
-    INCORRECT_ANSWER_LABEL: 'Incorrect answer',
+    INCORRECT_ANSWER_LABEL: 'Incorrect answers',
     INCORRECT_ANSWERS_REQUIRED: 'Please inform all the incorrect answers',
     TRUE_RADIO_LABEL: 'True',
     FALSE_RADIO_LABEL: 'False',

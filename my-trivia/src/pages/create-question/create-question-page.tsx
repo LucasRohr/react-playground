@@ -1,8 +1,17 @@
 import { useSetAtom } from 'jotai'
 import { Controller, useForm } from 'react-hook-form'
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    ToggleButton,
+    ToggleButtonGroup,
+} from '@mui/material'
 
 import { MTButton, MTInput } from '@components'
 import { createdQuestionsAtom } from '@store'
+import { QUESTION_CATEGORIES, QUESTION_FILTER_LABELS, QUESTIONS_FILTERS, SCORES } from '@constants'
 
 import { CREATE_QUESTION_PAGE_STRINGS } from './create-question-strings'
 import {
@@ -12,6 +21,7 @@ import {
     CreateQuestionSearchForm,
     IncorrectAnswerInputWrapper,
     IncorrectAnswersContainer,
+    IncorrectAnswersLabel,
     SelectCategoryContainer,
     SelectDifficultyContainer,
     SelectErrorText,
@@ -21,15 +31,6 @@ import {
 } from './create-question-style'
 import type { QuestionCreateFormInterface } from './create-question-types'
 import { FORM_DEFAULT_VALUES, INPUT_IDS, INPUT_NAMES } from './create-questions-constants'
-import { QUESTION_CATEGORIES, QUESTION_FILTER_LABELS, QUESTIONS_FILTERS } from '@constants'
-import {
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    ToggleButton,
-    ToggleButtonGroup,
-} from '@mui/material'
 
 export function CreateQuestionPage() {
     const {
@@ -52,8 +53,15 @@ export function CreateQuestionPage() {
             return null
         }
 
+        const upperQuestionDifficulty = difficulty.toUpperCase()
+        const parsedDifficulty =
+            QUESTIONS_FILTERS.DIFFICULTY[
+                upperQuestionDifficulty as keyof typeof QUESTIONS_FILTERS.DIFFICULTY
+            ]
+        const parsedScore = SCORES[parsedDifficulty as keyof typeof SCORES]
+
         const newQuestion = {
-            id: Math.floor(Math.random()),
+            score: parsedScore,
             question,
             category,
             difficulty,
@@ -189,8 +197,6 @@ export function CreateQuestionPage() {
         const isBooleanType = type === QUESTIONS_FILTERS.TYPE.BOOLEAN.toLowerCase()
 
         const renderBooleanTypeFields = () => {
-            console.log(correctAnswer)
-
             return (
                 <AnswersContainer>
                     <AnswersLabel>{CREATE_QUESTION_PAGE_STRINGS.CORRECT_ANSWER_LABEL}</AnswersLabel>
@@ -253,9 +259,9 @@ export function CreateQuestionPage() {
                             required: CREATE_QUESTION_PAGE_STRINGS.CORRECT_ANSWER_REQUIRED,
                         })}
                     />
-                    <AnswersLabel>
+                    <IncorrectAnswersLabel>
                         {CREATE_QUESTION_PAGE_STRINGS.INCORRECT_ANSWER_LABEL}
-                    </AnswersLabel>
+                    </IncorrectAnswersLabel>
                     <IncorrectAnswersContainer>
                         {renderIncorrectAnswers()}
                     </IncorrectAnswersContainer>
