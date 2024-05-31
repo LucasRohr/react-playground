@@ -1,8 +1,10 @@
-import { useAtomValue, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 
 import { createdQuestionsAtom, homeQuestionsAtom, searchQuestionsAtom } from '@store'
+import { QuestionsListInterface } from '@factories'
 
 interface UseCreatedQuestionsInterface {
+    questions?: string | QuestionsListInterface | null | undefined
     filters?: {
         category: string
         difficulty: string
@@ -13,14 +15,14 @@ interface UseCreatedQuestionsInterface {
 export function useCreatedQuestions(params: UseCreatedQuestionsInterface) {
     const createdQuestions = useAtomValue(createdQuestionsAtom)
 
-    const setHomeQuestions = useSetAtom(homeQuestionsAtom)
-    const setSearchQuestions = useSetAtom(searchQuestionsAtom)
+    const [homeQuestions, setHomeQuestions] = useAtom(homeQuestionsAtom)
+    const [searchQuestions, setSearchQuestions] = useAtom(searchQuestionsAtom)
 
-    const { filters } = params
+    const { questions, filters } = params
 
     // Condition to filter the created questions for applying them on question search results
     if (filters) {
-        const questions = createdQuestions.filter((question) => {
+        const filteredQuestions = createdQuestions.filter((question) => {
             const isSameCategory = filters.category.length
                 ? question.category === filters.category
                 : true
@@ -34,14 +36,17 @@ export function useCreatedQuestions(params: UseCreatedQuestionsInterface) {
             return isSameCategory && isSameDifficulty && isSameType
         })
 
-        setHomeQuestions((prevQuestions) => ({
-            questions: [...prevQuestions.questions, ...questions],
-        }))
+        setSearchQuestions({
+            questions: [...questions.questions, ...filteredQuestions],
+        })
     } else {
-        setSearchQuestions((prevQuestions) => ({
-            questions: [...prevQuestions.questions, ...createdQuestions],
-        }))
+        setSearchQuestions({
+            questions: [...questions.questions, ...createdQuestions],
+        })
+        setHomeQuestions({
+            questions: [...questions.questions, ...createdQuestions],
+        })
     }
 
-    return { createdQuestions }
+    return { homeQuestions, searchQuestions }
 }

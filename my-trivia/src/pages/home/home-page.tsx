@@ -1,22 +1,22 @@
-import { useAtom } from 'jotai'
+import { useAtomValue } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { CircularProgress } from '@mui/material'
 
 import { QuestionsService } from '@services'
-import { QuestionsListInterface } from '@factories'
 import { QuestionCardComponent } from '@components'
 import { homeQuestionsAtom } from '@store'
 
 import { HomeContainer, Title } from './home-page-style'
 import { HOME_PAGE_STRINGS } from './home-page-strings'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
+import { useCreatedQuestions } from '@hooks'
 
 const RANDOM_QUESTIONS_AMOUNT = 10
 
 export function HomePage() {
     const questionsService = new QuestionsService()
 
-    const [homeQuestions, setHomeQuestions] = useAtom(homeQuestionsAtom)
+    const homeQuestions = useAtomValue(homeQuestionsAtom)
 
     const {
         error,
@@ -29,10 +29,9 @@ export function HomePage() {
         enabled: homeQuestions === undefined || homeQuestions?.questions?.length === 1,
     })
 
-    useEffect(() => {
-        const questionsList = questionsResponse as QuestionsListInterface
-        setHomeQuestions(questionsList)
-    }, [questionsResponse, setHomeQuestions])
+    const { homeQuestions: questionsList } = useCreatedQuestions({
+        questions: questionsResponse,
+    })
 
     const renderQuestions = useCallback(() => {
         const shouldShowLoader = isLoading || isRequesting
@@ -45,14 +44,14 @@ export function HomePage() {
             return <p>{error.message}</p>
         }
 
-        if (!homeQuestions || !homeQuestions?.questions) {
+        if (!questionsList || !questionsList?.questions) {
             return null
         }
 
-        return homeQuestions?.questions.map((question, index) => (
+        return questionsList?.questions.map((question, index) => (
             <QuestionCardComponent key={index} questionsAtom={homeQuestionsAtom} {...question} />
         ))
-    }, [error, homeQuestions, isLoading, isRequesting])
+    }, [error, questionsList, isLoading, isRequesting])
 
     return (
         <HomeContainer>

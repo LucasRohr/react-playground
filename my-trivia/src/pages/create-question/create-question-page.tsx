@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSetAtom } from 'jotai'
 import { Controller, useForm } from 'react-hook-form'
 import {
@@ -5,6 +6,7 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    Snackbar,
     ToggleButton,
     ToggleButtonGroup,
 } from '@mui/material'
@@ -33,18 +35,20 @@ import type { QuestionCreateFormInterface } from './create-question-types'
 import { FORM_DEFAULT_VALUES, INPUT_IDS, INPUT_NAMES } from './create-questions-constants'
 
 export function CreateQuestionPage() {
+    const [shouldOpenSnackbar, setShouldOpenSnackbar] = useState<boolean>(false)
+
+    const setCreatedQuestions = useSetAtom(createdQuestionsAtom)
     const {
         register,
         handleSubmit,
         watch,
         setValue,
+        reset,
         control,
         formState: { errors, isValid },
     } = useForm<QuestionCreateFormInterface>({
         defaultValues: FORM_DEFAULT_VALUES,
     })
-
-    const setCreatedQuestions = useSetAtom(createdQuestionsAtom)
 
     const { question, category, difficulty, type, correctAnswer, incorrectAnswers } = watch() // Watch over form changes to build the question
 
@@ -71,6 +75,8 @@ export function CreateQuestionPage() {
         }
 
         setCreatedQuestions((prevQuestions) => [...prevQuestions, newQuestion])
+        reset()
+        setShouldOpenSnackbar(true)
     }
 
     const renderQuestionField = () => {
@@ -278,6 +284,13 @@ export function CreateQuestionPage() {
 
     return (
         <CreateQuestionContainer>
+            <Snackbar
+                open={shouldOpenSnackbar}
+                autoHideDuration={5000}
+                message={CREATE_QUESTION_PAGE_STRINGS.SUCCESS_TOAST_MESSAGE}
+                onClose={() => setShouldOpenSnackbar(false)}
+            />
+
             <Title>{CREATE_QUESTION_PAGE_STRINGS.TITLE}</Title>
 
             <CreateQuestionSearchForm onSubmit={handleSubmit(saveCreatedQuestion)}>
