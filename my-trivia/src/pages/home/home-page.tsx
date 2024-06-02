@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useAtomValue } from 'jotai'
 import { useQuery } from '@tanstack/react-query'
 import { CircularProgress } from '@mui/material'
@@ -5,11 +6,11 @@ import { CircularProgress } from '@mui/material'
 import { QuestionsService } from '@services'
 import { QuestionCardComponent } from '@components'
 import { homeQuestionsAtom } from '@store'
+import { useCreatedQuestions } from '@hooks'
+import { QuestionsListInterface } from '@factories'
 
 import { HomeContainer, Title } from './home-page-style'
 import { HOME_PAGE_STRINGS } from './home-page-strings'
-import { useCallback } from 'react'
-import { useCreatedQuestions } from '@hooks'
 
 const RANDOM_QUESTIONS_AMOUNT = 10
 
@@ -30,7 +31,7 @@ export function HomePage() {
     })
 
     const { homeQuestions: questionsList } = useCreatedQuestions({
-        questions: questionsResponse,
+        questions: questionsResponse as QuestionsListInterface,
     })
 
     const renderQuestions = useCallback(() => {

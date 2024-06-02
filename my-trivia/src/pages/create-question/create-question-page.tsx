@@ -57,6 +57,9 @@ export function CreateQuestionPage() {
             return null
         }
 
+        const parsedCategory = Object.values(QUESTION_CATEGORIES).find(
+            (questionCateg) => questionCateg.ID === Number.parseInt(category)
+        )
         const upperQuestionDifficulty = difficulty.toUpperCase()
         const parsedDifficulty =
             QUESTIONS_FILTERS.DIFFICULTY[
@@ -67,7 +70,7 @@ export function CreateQuestionPage() {
         const newQuestion = {
             score: parsedScore,
             question,
-            category,
+            category: parsedCategory?.LABEL ?? '',
             difficulty,
             type,
             correctAnswer,
@@ -77,6 +80,15 @@ export function CreateQuestionPage() {
         setCreatedQuestions((prevQuestions) => [...prevQuestions, newQuestion])
         reset()
         setShouldOpenSnackbar(true)
+    }
+
+    const onChangeBooleanCorrectAnswer = (value: string) => {
+        const isTrueAnswer = value === CREATE_QUESTION_PAGE_STRINGS.TRUE_RADIO_LABEL
+        const incorrectAnswerValue = isTrueAnswer
+            ? CREATE_QUESTION_PAGE_STRINGS.FALSE_RADIO_LABEL
+            : value
+
+        setValue(INPUT_NAMES.INCORRECT_ANSWER, [incorrectAnswerValue])
     }
 
     const renderQuestionField = () => {
@@ -152,13 +164,13 @@ export function CreateQuestionPage() {
                             required: CREATE_QUESTION_PAGE_STRINGS.DIFFICULTY_INPUT_REQUIRED,
                         })}
                     >
-                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.EASY.toLowerCase()}>
+                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.EASY.toUpperCase()}>
                             {QUESTION_FILTER_LABELS.DIFFICULTY.EASY}
                         </MenuItem>
-                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.MEDIUM.toLowerCase()}>
+                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.MEDIUM.toUpperCase()}>
                             {QUESTION_FILTER_LABELS.DIFFICULTY.MEDIUM}
                         </MenuItem>
-                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.HARD.toLowerCase()}>
+                        <MenuItem value={QUESTIONS_FILTERS.DIFFICULTY.HARD.toUpperCase()}>
                             {QUESTION_FILTER_LABELS.DIFFICULTY.HARD}
                         </MenuItem>
                     </Select>
@@ -214,6 +226,7 @@ export function CreateQuestionPage() {
                                 {...field}
                                 onChange={(_, value: string) => {
                                     setValue(field.name, value)
+                                    onChangeBooleanCorrectAnswer(value)
                                 }}
                                 color='primary'
                                 value={correctAnswer}

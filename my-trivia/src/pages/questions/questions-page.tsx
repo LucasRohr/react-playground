@@ -1,8 +1,14 @@
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 
 import { QUESTION_CATEGORIES, QUESTION_FILTER_LABELS, QUESTIONS_FILTERS } from '@constants'
 import { MTButton, MTInput, QuestionCardComponent } from '@components'
+import { QuestionsService } from '@services'
+import { searchQuestionsAtom } from '@store'
+import { QuestionsListInterface } from '@factories'
+import { useCreatedQuestions } from '@hooks'
 
 import { QUESTIONS_PAGE_STRINGS } from './questions-page-strings'
 import {
@@ -13,12 +19,6 @@ import {
     SelectTypeContainer,
     Title,
 } from './questions-page-style'
-import { useQuery } from '@tanstack/react-query'
-import { QuestionsService } from '@services'
-import { useCallback, useEffect, useState } from 'react'
-import { useAtom } from 'jotai'
-import { searchQuestionsAtom } from '@store'
-import { QuestionsListInterface } from '@factories'
 
 interface QuestionsSearchFormInterface {
     quantity: number
@@ -55,8 +55,6 @@ export function QuestionsPage() {
 
     const [shouldSearch, setShouldSearch] = useState(false)
 
-    const [searchQuestions, setSearchQuestions] = useAtom(searchQuestionsAtom)
-
     const {
         register,
         handleSubmit,
@@ -80,14 +78,16 @@ export function QuestionsPage() {
         enabled: shouldSearch,
     })
 
-    useEffect(() => {
-        const questionsList = questionsResponse as QuestionsListInterface
-        setSearchQuestions(questionsList)
+    const { searchQuestions: questionsList } = useCreatedQuestions({
+        questions: questionsResponse as QuestionsListInterface,
+        filters: { category, difficulty, type },
+    })
 
+    useEffect(() => {
         if (questionsList) {
             setShouldSearch(false)
         }
-    }, [questionsResponse, setSearchQuestions])
+    }, [questionsList])
 
     const renderQuestions = useCallback(() => {
         const shouldShowLoader = shouldSearch && (isLoading || isRequesting)
@@ -100,14 +100,14 @@ export function QuestionsPage() {
             return <p>{error.message}</p>
         }
 
-        if (!searchQuestions || !searchQuestions?.questions) {
+        if (!questionsList || !questionsList?.questions) {
             return null
         }
 
-        return searchQuestions?.questions.map((question, index) => (
+        return questionsList?.questions.map((question, index) => (
             <QuestionCardComponent key={index} questionsAtom={searchQuestionsAtom} {...question} />
         ))
-    }, [error, searchQuestions, shouldSearch, isLoading, isRequesting])
+    }, [error, questionsList, shouldSearch, isLoading, isRequesting])
 
     const renderQuantityField = () => {
         const error = errors.quantity?.message
