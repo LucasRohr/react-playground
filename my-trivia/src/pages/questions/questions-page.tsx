@@ -84,10 +84,10 @@ export function QuestionsPage() {
     })
 
     useEffect(() => {
-        if (questionsList) {
+        if (questionsResponse) {
             setShouldSearch(false)
         }
-    }, [questionsList])
+    }, [questionsResponse])
 
     const renderQuestions = useCallback(() => {
         const shouldShowLoader = shouldSearch && (isLoading || isRequesting)

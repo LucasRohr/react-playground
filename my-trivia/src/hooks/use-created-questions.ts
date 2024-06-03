@@ -1,8 +1,8 @@
+import { useEffect } from 'react'
 import { useAtom, useAtomValue } from 'jotai'
 
-import { createdQuestionsAtom, homeQuestionsAtom, searchQuestionsAtom } from '@store'
 import { QuestionsListInterface } from '@factories'
-import { useEffect } from 'react'
+import { createdQuestionsAtom, homeQuestionsAtom, searchQuestionsAtom } from '@store'
 
 interface UseCreatedQuestionsInterface {
     questions?: QuestionsListInterface
@@ -43,9 +43,6 @@ export function useCreatedQuestions(params: UseCreatedQuestionsInterface) {
                 questions: [...parsedQuestions.questions, ...filteredQuestions],
             })
         } else {
-            setSearchQuestions({
-                questions: [...parsedQuestions.questions, ...createdQuestions],
-            })
             setHomeQuestions({
                 questions: [...parsedQuestions.questions, ...createdQuestions],
             })
