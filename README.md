@@ -27,7 +27,7 @@ Projects plan to cover:
 
 ---
 
-**:question: My Trivia project:**
+**:question: My Trivia project (original project):**
 
 **Context:** application to answer and create trivia questions in a gamified way<br>
 **Used API:** https://opentdb.com/api_config.php<br>
@@ -43,3 +43,15 @@ Projects plan to cover:
 - TanStack Query (FKA React Query)
 - Jotai
 - React Hook Form
+
+**:books: Alura Books project (course project):**
+
+**Context:** website to buy programming books for learning. Project mainly used by me to learn more about React Query<br>
+**Used API:** Mocked Rest API with local run<br>
+**Base course:** [Alura course link](https://cursos.alura.com.br/course/react-obtendo-dados-react-query)<br><br>
+**Plan libraries/frameworks:**<br>
+
+- ES-Lint
+- Prettier
+- React Router
+- TanStack Query (FKA React Query)
