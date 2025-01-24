@@ -3,7 +3,7 @@ import { MainTitlePropsInterface } from './PropsInterface'
 
 import './MainTitle.scss'
 
-function MainTitle(props: MainTitlePropsInterface) {
+const MainTitle = (props: MainTitlePropsInterface) => {
     const { title } = props
 
     return (
