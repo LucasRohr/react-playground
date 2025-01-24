@@ -1,0 +1,14 @@
+.main-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1em 0 1em 0;
+    background-image: linear-gradient(to right, #002F52, #326589);
+
+    & > h1 {
+        font-size: 1,5em;
+        line-height: 1.5em;
+        color: white;
+    }
+}
