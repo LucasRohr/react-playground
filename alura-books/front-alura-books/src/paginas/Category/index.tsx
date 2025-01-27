@@ -1,36 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { MainTitle } from '../../componentes/MainTitle'
-import { CategoryInterface } from '../../interfaces'
-import http from '../../http'
 import { useParams } from 'react-router-dom'
 import { Loader } from '../../componentes/Loader'
+import { useQuery } from '@tanstack/react-query'
+import { getCategoryBySlug } from '../../http/get-category-by-slug'
 
 const CategoryPage = () => {
-    const [category, setCategory] = useState<CategoryInterface>()
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-
     const routeParams = useParams()
 
-    const getCategory = useCallback(async () => {
-        setIsLoading(true)
-
-        const response = await http.get<CategoryInterface[]>('categorias', {
-            params: {
-                slug: routeParams.slug,
-            },
-        })
-
-        const isValidResponse = response.data && response.data.length
-
-        if (isValidResponse) {
-            setIsLoading(false)
-            setCategory(response.data[0])
-        }
-    }, [routeParams.slug])
-
-    useEffect(() => {
-        getCategory()
-    }, [getCategory])
+    const { data: category, isLoading } = useQuery({
+        queryKey: ['categoryBySlug', routeParams.slug],
+        queryFn: () => getCategoryBySlug(routeParams.slug ?? ''),
+    })
 
     const renderContent = useCallback(() => {
         if (isLoading) {
@@ -42,7 +23,7 @@ const CategoryPage = () => {
                 <MainTitle title={category?.nome ?? 'Carregando...'} />
             </section>
         )
-    }, [isLoading, category])
+    }, [category, isLoading])
 
     return renderContent()
 }
