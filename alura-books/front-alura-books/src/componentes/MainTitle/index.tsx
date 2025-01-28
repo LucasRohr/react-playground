@@ -1,9 +1,9 @@
 import React from 'react'
-import { MainTitlePropsInterface } from './PropsInterface'
+import { MainTitleProps } from './types'
 
 import './MainTitle.scss'
 
-const MainTitle = (props: MainTitlePropsInterface) => {
+const MainTitle = (props: MainTitleProps) => {
     const { title } = props
 
     return (

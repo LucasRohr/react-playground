@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { Loader } from '../../componentes/Loader'
 import { useQuery } from '@tanstack/react-query'
 import { getCategoryBySlug } from '../../http/get-category-by-slug'
+import { BooksList } from '../../componentes/BooksList'
 
 const CategoryPage = () => {
     const routeParams = useParams()
@@ -21,6 +22,7 @@ const CategoryPage = () => {
         return (
             <section>
                 <MainTitle title={category?.nome ?? 'Carregando...'} />
+                <BooksList category={category!} /> {/* Higher Order Component */}
             </section>
         )
     }, [category, isLoading])
