@@ -1,6 +1,6 @@
 import { AbBotao, AbCard } from 'ds-alurabooks'
 import { useState } from 'react'
-import { IBook } from '../../interfaces/ILivro'
+import { IBook } from '../../interfaces/IBook'
 
 import './LivrosDestaque.css'
 

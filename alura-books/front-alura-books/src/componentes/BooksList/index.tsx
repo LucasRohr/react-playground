@@ -7,8 +7,11 @@ import Titulo from '../Titulo'
 import { BookItemCard } from '../BookItem'
 
 import './BooksList.scss'
+import { useNavigate } from 'react-router-dom'
 
 const BooksList = ({ category }: BooksListProps) => {
+    const navigate = useNavigate()
+
     const {
         data: books,
         isLoading,
@@ -17,6 +20,13 @@ const BooksList = ({ category }: BooksListProps) => {
         queryKey: ['get-category-books', category],
         queryFn: () => getCategoryBooks(category),
     })
+
+    const navigateToBookDetails = useCallback(
+        (slug: string) => {
+            navigate('livros', { state: { slug } })
+        },
+        [navigate]
+    )
 
     const renderBooksList = useCallback(() => {
         const hasError = isError || !books
@@ -41,10 +51,11 @@ const BooksList = ({ category }: BooksListProps) => {
                     slug={slug}
                     coverImage={coverImage}
                     minPrice={buyOptions[0].price}
+                    onPress={navigateToBookDetails}
                 />
             )
         })
-    }, [books, isLoading, isError])
+    }, [books, isLoading, isError, navigateToBookDetails])
 
     return <section className='books-list-container'>{renderBooksList()}</section>
 }

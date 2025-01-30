@@ -1,5 +1,5 @@
 import { IBookApi } from '../interfaces/IBookApi'
-import { IBook } from '../interfaces/ILivro'
+import { IBook } from '../interfaces/IBook'
 import { buyOptionsFactory } from './buy-options-factory'
 
 export const bookFactory = (object: IBookApi): IBook | null => {

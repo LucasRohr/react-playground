@@ -4,6 +4,7 @@ import Home from '../paginas/Home'
 import PaginaBase from '../paginas/PaginaBase'
 import Pedidos from '../paginas/Pedidos'
 import { CategoryPage } from '../paginas/Category'
+import { BookDetails } from '../paginas/BookDetails'
 
 const Rotas = () => {
     return (
@@ -14,6 +15,7 @@ const Rotas = () => {
                     <Route path='pedidos' element={<Pedidos />} />
                 </Route>
                 <Route path='/categorias/:slug' element={<CategoryPage />} />
+                <Route path='/categorias/:category/livros' element={<BookDetails />} />
             </Route>
         </Routes>
     )

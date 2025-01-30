@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { AbGrupoOpcao, AbGrupoOpcoes } from 'ds-alurabooks'
 import { AbInputQuantidade } from 'ds-alurabooks'
 
@@ -7,12 +7,14 @@ import { getBookBySlug } from '../../http/get-book-by-slug'
 import { MainTitle } from '../../componentes/MainTitle'
 import { useCallback, useMemo, useState } from 'react'
 import { Loader } from '../../componentes/Loader'
-import { IBook } from '../../interfaces/ILivro'
+import { IBook } from '../../interfaces/IBook'
+import { AuthorSection } from './components/AuthorSection'
 
 const BookDetails = () => {
     const [bookQuantity, setBookQuantity] = useState<number>(1)
 
-    const routeParams = useParams()
+    const location = useLocation()
+    const { slug } = location.state || {}
 
     const {
         data: bookDetails,
@@ -20,8 +22,8 @@ const BookDetails = () => {
         isError,
         error,
     } = useQuery({
-        queryKey: ['get-book-by-slug', routeParams.slug],
-        queryFn: () => getBookBySlug(routeParams.slug ?? ''),
+        queryKey: ['get-book-by-slug', slug],
+        queryFn: () => getBookBySlug(slug ?? ''),
     })
 
     const buyOptionsMapped = useMemo((): AbGrupoOpcao[] => {
@@ -81,6 +83,10 @@ const BookDetails = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [bookDetails?.about])
 
+    const renderAuthorSection = useCallback(() => {
+        return <AuthorSection id={bookDetails?.writer as number} />
+    }, [bookDetails?.writer])
+
     const renderContent = useCallback(() => {
         const hasError = isError ?? !bookDetails
 
@@ -104,9 +110,18 @@ const BookDetails = () => {
             <>
                 {renderBookSection()}
                 {renderAboutSection()}
+                {renderAuthorSection()}
             </>
         )
-    }, [isError, bookDetails, isLoading, renderBookSection, renderAboutSection, error?.message])
+    }, [
+        isError,
+        bookDetails,
+        isLoading,
+        renderBookSection,
+        renderAboutSection,
+        renderAuthorSection,
+        error?.message,
+    ])
 
     return (
         <section className='book-details'>
