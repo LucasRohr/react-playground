@@ -9,6 +9,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { Loader } from '../../componentes/Loader'
 import { IBook } from '../../interfaces/IBook'
 import { AuthorSection } from './components/AuthorSection'
+import { AxiosError } from 'axios'
 
 const BookDetails = () => {
     const [bookQuantity, setBookQuantity] = useState<number>(1)
@@ -21,7 +22,7 @@ const BookDetails = () => {
         isLoading,
         isError,
         error,
-    } = useQuery({
+    } = useQuery<IBook | null, AxiosError>({
         queryKey: ['get-book-by-slug', slug],
         queryFn: () => getBookBySlug(slug ?? ''),
     })
