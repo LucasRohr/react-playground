@@ -9,6 +9,10 @@ export const getBookBySlug = async (slug: string) => {
         },
     })
 
+    if (!response.data.length) {
+        return null
+    }
+
     const parsedBook = bookFactory(response.data[0])
 
     return parsedBook

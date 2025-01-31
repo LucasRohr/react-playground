@@ -136,9 +136,12 @@ const BookDetails = () => {
         }
 
         if (hasError) {
+            const defaultErrorMessage = error?.message ?? 'Erro inesperado'
+            const bookContentError = !bookDetails ? 'Livro não encontrado' : defaultErrorMessage
+
             return (
                 <section className='book-details__error'>
-                    <h2>{error?.message ?? 'Erro inesperado'}</h2>
+                    <h2>{bookContentError}</h2>
                 </section>
             )
         }
