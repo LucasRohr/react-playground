@@ -11,6 +11,8 @@ import { AuthorSection } from './components/AuthorSection'
 import { AxiosError } from 'axios'
 import { getAuthorById } from '../../http/get-author-by-id'
 
+import './BookDetails.scss'
+
 const BookDetails = () => {
     const [bookQuantity, setBookQuantity] = useState<number>(1)
 
@@ -60,7 +62,11 @@ const BookDetails = () => {
 
         return (
             <section className='book-details__product'>
-                <img src={coverImage} alt='book-details-cover-image' />
+                <img
+                    className='book-details__product__image'
+                    src={coverImage}
+                    alt='book-details-cover-image'
+                />
 
                 <section className='book-details__product__info'>
                     <h2 className='book-details__product__info__title'>{title}</h2>

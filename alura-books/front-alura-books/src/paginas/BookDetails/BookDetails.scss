@@ -1,0 +1,45 @@
+.book-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 5em;
+
+    &__loader, &____error {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__product {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 5em;
+        margin-bottom: 5em;
+
+        &__info {
+            margin-left: 30em;
+        }
+
+        &__image {
+            object-fit: contain;
+        }
+    }
+
+    &__about-section {
+        display: flex;
+        flex-direction: column;
+        padding-left: 5em;
+        padding-right: 5em;
+
+        &__title::after {
+            width: 50px;
+            height: 3px;
+            background-color: goldenrod;
+        }
+    }
+}
