@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
-import { AbGrupoOpcao, AbGrupoOpcoes } from 'ds-alurabooks'
-import { AbInputQuantidade } from 'ds-alurabooks'
+import { AbGrupoOpcao, AbGrupoOpcoes, AbInputQuantidade, AbBotao } from 'ds-alurabooks'
 
 import { getBookBySlug } from '../../http/get-book-by-slug'
 import { MainTitle } from '../../componentes/MainTitle'
@@ -10,6 +9,7 @@ import { Loader } from '../../componentes/Loader'
 import { IBook } from '../../interfaces/IBook'
 import { AuthorSection } from './components/AuthorSection'
 import { AxiosError } from 'axios'
+import { getAuthorById } from '../../http/get-author-by-id'
 
 const BookDetails = () => {
     const [bookQuantity, setBookQuantity] = useState<number>(1)
@@ -27,6 +27,21 @@ const BookDetails = () => {
         queryFn: () => getBookBySlug(slug ?? ''),
     })
 
+    const {
+        data: author,
+        isLoading: isLoadingAuthor,
+        isError: isErrorAuthor,
+        error: errorAuthor,
+    } = useQuery({
+        queryKey: ['get-author-by-id', bookDetails?.writer],
+        queryFn: () => getAuthorById(bookDetails?.writer ?? 0),
+    })
+
+    console.log({
+        bookDetails,
+        error,
+    })
+
     const buyOptionsMapped = useMemo((): AbGrupoOpcao[] => {
         const options = bookDetails?.buyOptions
 
@@ -41,7 +56,7 @@ const BookDetails = () => {
     }, [bookDetails?.buyOptions])
 
     const renderBookSection = useCallback(() => {
-        const { coverImage, title, description, writer } = bookDetails as IBook
+        const { coverImage, title, description } = bookDetails as IBook
 
         return (
             <section className='book-details__product'>
@@ -50,7 +65,7 @@ const BookDetails = () => {
                 <section className='book-details__product__info'>
                     <h2 className='book-details__product__info__title'>{title}</h2>
                     <p className='book-details__product__info__description'>{description}</p>
-                    <span className='book-details__product__info__writer'>Por: {writer}</span>
+                    <span className='book-details__product__info__writer'>Por: {author?.name}</span>
 
                     <h3 className='book-details__product__info__buy-options-label'>
                         Selecione o formato do seu livro
@@ -66,11 +81,11 @@ const BookDetails = () => {
 
                     <AbInputQuantidade value={bookQuantity} onChange={setBookQuantity} />
 
-                    <button className='book-details__product__info__button'>Comprar</button>
+                    <AbBotao texto='Comprar' />
                 </section>
             </section>
         )
-    }, [bookDetails, bookQuantity, buyOptionsMapped])
+    }, [bookDetails, author?.name, bookQuantity, buyOptionsMapped])
 
     const renderAboutSection = useCallback(() => {
         const { about } = bookDetails as IBook
@@ -85,8 +100,23 @@ const BookDetails = () => {
     }, [bookDetails?.about])
 
     const renderAuthorSection = useCallback(() => {
-        return <AuthorSection id={bookDetails?.writer as number} />
-    }, [bookDetails?.writer])
+        const hasError = isErrorAuthor || !author
+
+        if (isLoadingAuthor) {
+            return <Loader />
+        }
+
+        if (hasError) {
+            return (
+                <section className='book-details__error'>
+                    <h2>{errorAuthor?.message ?? 'Erro inesperado'}</h2>
+                </section>
+            )
+        }
+
+        return <AuthorSection about={author?.about} />
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [author?.about, errorAuthor?.message, isErrorAuthor, isLoadingAuthor])
 
     const renderContent = useCallback(() => {
         const hasError = isError ?? !bookDetails

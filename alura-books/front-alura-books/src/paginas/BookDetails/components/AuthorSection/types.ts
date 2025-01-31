@@ -1,3 +1,3 @@
 export interface AuthorSectionProps {
-    id: number
+    about: string
 }
