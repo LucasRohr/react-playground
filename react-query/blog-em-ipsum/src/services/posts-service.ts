@@ -1,14 +1,14 @@
 export class PostsService {
   constructor() {}
 
-  async fetchPosts(pageNum = 1) {
+  async getPosts({ pageNum = 1 }) {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${pageNum}`
     );
     return response.json();
   }
 
-  async fetchComments(postId) {
+  async getComments(postId) {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
     );

@@ -1,28 +1,48 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import { PostDetail } from "../post-detail";
+import { PostInterface } from "../../interfaces/post";
+import { PostsService } from "../../services/posts-service";
 
 const maxPostPage = 10;
 
 export function Posts() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [selectedPost, setSelectedPost] = useState<PostInterface>(null);
 
-  // replace with useQuery
-  const data = [];
+  const postsService = new PostsService();
+
+  const { data, isLoading, isError, error } = useQuery<PostInterface[]>({
+    queryKey: ["get-posts"],
+    queryFn: () => postsService.getPosts({ pageNum: 1 }),
+  });
+
+  const renderPosts = useCallback(() => {
+    const hasError = isError || !data;
+
+    if (isLoading) {
+      return <span>Loading...</span>;
+    }
+
+    if (hasError) {
+      return <span>{error.message}</span>;
+    }
+
+    return data.map((post) => (
+      <li
+        key={post.id}
+        className="post-title"
+        onClick={() => setSelectedPost(post)}
+      >
+        {post.title}
+      </li>
+    ));
+  }, [data, isLoading, isError, error]);
 
   return (
     <>
-      <ul>
-        {data.map((post) => (
-          <li
-            key={post.id}
-            className="post-title"
-            onClick={() => setSelectedPost(post)}
-          >
-            {post.title}
-          </li>
-        ))}
-      </ul>
+      <ul>{renderPosts()}</ul>
       <div className="pages">
         <button disabled onClick={() => {}}>
           Previous page
