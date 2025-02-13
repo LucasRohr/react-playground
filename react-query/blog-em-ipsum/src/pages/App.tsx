@@ -1,4 +1,4 @@
-import { Posts } from "./Posts";
+import { Posts } from "../components/posts";
 import "./App.css";
 
 function App() {

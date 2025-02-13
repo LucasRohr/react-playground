@@ -1,7 +1,6 @@
 import { useState } from "react";
+import { PostDetail } from "../post-detail";
 
-import { fetchPosts, deletePost, updatePost } from "./api";
-import { PostDetail } from "./PostDetail";
 const maxPostPage = 10;
 
 export function Posts() {

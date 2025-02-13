@@ -1,4 +1,3 @@
-import { fetchComments } from "./api";
 import "./PostDetail.css";
 
 export function PostDetail({ post }) {
