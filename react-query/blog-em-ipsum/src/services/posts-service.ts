@@ -1,5 +1,13 @@
 export class PostsService {
-  constructor() {}
+  private static instance: PostsService;
+
+  static getInstance(): PostsService {
+    if (!this.instance) {
+      this.instance = new PostsService();
+    }
+
+    return this.instance;
+  }
 
   async getPosts({ pageNum = 1 }) {
     const response = await fetch(

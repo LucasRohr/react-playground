@@ -1,6 +1,11 @@
-import "./PostDetail.css";
+import { PostDetailsProps } from "./types";
 
-export function PostDetail({ post }) {
+import "./PostDetail.css";
+import { PostsService } from "../../services/posts-service";
+
+export function PostDetail({ post }: PostDetailsProps) {
+  const postsService = PostsService.getInstance();
+
   // replace with useQuery
   const data = [];
 

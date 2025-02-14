@@ -11,15 +11,20 @@ export function Posts() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [selectedPost, setSelectedPost] = useState<PostInterface>(null);
 
-  const postsService = new PostsService();
+  const postsService = PostsService.getInstance();
 
-  const { data, isLoading, isError, error } = useQuery<PostInterface[]>({
+  const {
+    data: posts,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<PostInterface[]>({
     queryKey: ["get-posts"],
     queryFn: () => postsService.getPosts({ pageNum: 1 }),
   });
 
   const renderPosts = useCallback(() => {
-    const hasError = isError || !data;
+    const hasError = isError || !posts;
 
     if (isLoading) {
       return <span>Loading...</span>;
@@ -29,7 +34,7 @@ export function Posts() {
       return <span>{error.message}</span>;
     }
 
-    return data.map((post) => (
+    return posts.map((post) => (
       <li
         key={post.id}
         className="post-title"
@@ -38,7 +43,7 @@ export function Posts() {
         {post.title}
       </li>
     ));
-  }, [data, isLoading, isError, error]);
+  }, [posts, isLoading, isError, error]);
 
   return (
     <>
