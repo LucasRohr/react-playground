@@ -1,13 +1,41 @@
-import { PostDetailsProps } from "./types";
+import { useQuery } from "@tanstack/react-query";
 
-import "./PostDetail.css";
 import { PostsService } from "../../services/posts-service";
+
+import { PostDetailsProps } from "./types";
+import "./PostDetail.css";
+import { useCallback } from "react";
 
 export function PostDetail({ post }: PostDetailsProps) {
   const postsService = PostsService.getInstance();
 
-  // replace with useQuery
-  const data = [];
+  const {
+    data: comments,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["get-post-comments", post.id],
+    queryFn: () => postsService.getComments({ postId: post.id }),
+  });
+
+  const renderComments = useCallback(() => {
+    const hasError = isError || !comments;
+
+    if (isLoading) {
+      return <span>Loading</span>;
+    }
+
+    if (hasError) {
+      return <span>{error.message}</span>;
+    }
+
+    return comments.map((comment) => (
+      <li key={comment.id}>
+        {comment.email}: {comment.body}
+      </li>
+    ));
+  }, [comments, isError, error, isLoading]);
 
   return (
     <>
@@ -15,11 +43,7 @@ export function PostDetail({ post }: PostDetailsProps) {
       <button>Delete</button> <button>Update title</button>
       <p>{post.body}</p>
       <h4>Comments</h4>
-      {data.map((comment) => (
-        <li key={comment.id}>
-          {comment.email}: {comment.body}
-        </li>
-      ))}
+      {renderComments()}
     </>
   );
 }

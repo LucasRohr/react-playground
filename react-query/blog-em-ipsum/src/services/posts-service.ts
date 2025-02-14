@@ -16,14 +16,14 @@ export class PostsService {
     return response.json();
   }
 
-  async getComments(postId) {
+  async getComments({ postId }) {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
     );
     return response.json();
   }
 
-  async deletePost(postId) {
+  async deletePost({ postId }) {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${postId}`,
       { method: "DELETE" }
@@ -31,7 +31,7 @@ export class PostsService {
     return response.json();
   }
 
-  async updatePost(postId) {
+  async updatePost({ postId }) {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${postId}`,
       {
