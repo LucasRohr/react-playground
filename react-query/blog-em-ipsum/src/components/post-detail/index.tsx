@@ -6,7 +6,11 @@ import { PostDetailsProps } from "./types";
 import "./PostDetail.css";
 import { useCallback } from "react";
 
-export function PostDetail({ post, deleteMutation }: PostDetailsProps) {
+export function PostDetail({
+  post,
+  deleteMutation,
+  updateMutation,
+}: PostDetailsProps) {
   const postsService = PostsService.getInstance();
 
   const {
@@ -53,12 +57,31 @@ export function PostDetail({ post, deleteMutation }: PostDetailsProps) {
     }
   }, [deleteMutation]);
 
+  const renderUpdateTitleStatus = useCallback(() => {
+    const { isPending, isError, error, isSuccess } = updateMutation;
+
+    if (isPending) {
+      return <p>Updating post title...</p>;
+    }
+
+    if (isError) {
+      return <p>Error while updating post title: {error.message}</p>;
+    }
+
+    if (isSuccess) {
+      return <p>Post title was updated</p>;
+    }
+  }, [updateMutation]);
+
   return (
     <>
       <h3 style={{ color: "blue" }}>{post.title}</h3>
       <button onClick={() => deleteMutation.mutate(post.id)}>Delete</button>
-      <button>Update title</button>
+      <button onClick={() => updateMutation.mutate(post.id)}>
+        Update title
+      </button>
       {renderDeleteStatus()}
+      {renderUpdateTitleStatus()}
       <p>{post.body}</p>
       <h4>Comments</h4>
       {renderComments()}

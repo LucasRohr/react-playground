@@ -30,6 +30,10 @@ export function Posts() {
     mutationFn: (postId: number) => postsService.deletePost({ postId }),
   });
 
+  const updateMutation = useMutation({
+    mutationFn: (postId: number) => postsService.updatePost({ postId }),
+  });
+
   useEffect(() => {
     const hasNextPage = currentPage < maxPostPage;
 
@@ -61,6 +65,7 @@ export function Posts() {
         onClick={() => {
           setSelectedPost(post);
           deleteMutation.reset();
+          updateMutation.reset();
         }}
       >
         {post.title}
@@ -92,7 +97,11 @@ export function Posts() {
       </div>
       <hr />
       {selectedPost && (
-        <PostDetail post={selectedPost} deleteMutation={deleteMutation} />
+        <PostDetail
+          post={selectedPost}
+          deleteMutation={deleteMutation}
+          updateMutation={updateMutation}
+        />
       )}
     </>
   );
