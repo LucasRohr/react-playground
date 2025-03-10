@@ -21,7 +21,7 @@ export function InfinitePeople() {
     isLoading,
     error,
     isError,
-  } = useInfiniteQuery<PageInterface, PersonInterface>({
+  } = useInfiniteQuery<PageInterface<PersonInterface>, PersonInterface>({
     queryKey: ["get-people-paginated"], // Sets the key
     queryFn: ({ pageParam }) => fetchUrl(pageParam), // Fetch function passing the pageParam
     getNextPageParam: (lastPage) => lastPage.next || undefined, // To get the next page param, return from the last page or return undefined

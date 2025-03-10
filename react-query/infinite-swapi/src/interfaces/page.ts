@@ -1,8 +1,8 @@
 import { PersonInterface } from "./person";
 
-export interface PageInterface {
+export interface PageInterface<T> {
   count: number;
   next: string | null;
   previous: string | null;
-  results: PersonInterface[];
+  results: T[];
 }
