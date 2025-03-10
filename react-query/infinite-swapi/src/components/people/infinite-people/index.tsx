@@ -13,13 +13,20 @@ const fetchUrl = async (url) => {
 };
 
 export function InfinitePeople() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<PageInterface, PersonInterface>({
-      queryKey: ["get-people-paginated"], // Sets the key
-      queryFn: ({ pageParam }) => fetchUrl(pageParam), // Fetch function passing the pageParam
-      getNextPageParam: (lastPage) => lastPage.next || undefined, // To get the next page param, return from the last page or return undefined
-      initialPageParam: initialUrl, // Sets the initial pageParam
-    });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
+    isError,
+  } = useInfiniteQuery<PageInterface, PersonInterface>({
+    queryKey: ["get-people-paginated"], // Sets the key
+    queryFn: ({ pageParam }) => fetchUrl(pageParam), // Fetch function passing the pageParam
+    getNextPageParam: (lastPage) => lastPage.next || undefined, // To get the next page param, return from the last page or return undefined
+    initialPageParam: initialUrl, // Sets the initial pageParam
+  });
 
   const fetchPage = useCallback(() => {
     if (!isFetchingNextPage) {
@@ -28,11 +35,26 @@ export function InfinitePeople() {
   }, [isFetchingNextPage, fetchNextPage]);
 
   const renderPages = useCallback(() => {
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    if (isError) {
+      return <span>{error}</span>;
+    }
+
     if (!data) {
-      return null;
+      return <span>No Star Wars data to present :(</span>;
     }
 
     return data.pages.map((page, pageIndex) => {
+      const isLastPage = pageIndex === data.pages.length - 1;
+      const shouldShowLoader = isFetchingNextPage && isLastPage;
+
+      if (shouldShowLoader) {
+        return <div>Loading...</div>;
+      }
+
       return page.results.map(({ name, hair_color, eye_color }, index) => {
         const personProps = {
           name,
@@ -43,7 +65,7 @@ export function InfinitePeople() {
         return <Person key={pageIndex + index} {...personProps} />;
       });
     });
-  }, [data]);
+  }, [data, isLoading, isFetchingNextPage, error, isError]);
 
   return (
     <InfiniteScroll hasMore={hasNextPage} loadMore={fetchPage}>
